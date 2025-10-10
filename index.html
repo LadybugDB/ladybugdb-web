@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LadybugDB - Graph Database for Object Storage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .tagline {
+            text-align: center;
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+            font-style: italic;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .highlight-box h3 {
+            color: #667eea;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        strong {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LadybugDB</h1>
+        <p class="tagline">A Graph Database Focused on Object Storage</p>
+        
+        <h2>What is LadybugDB?</h2>
+        <p>
+            LadybugDB is a modern graph database designed with a primary focus on <strong>object storage</strong>. 
+            Unlike traditional databases that treat storage as an afterthought, LadybugDB places object storage 
+            at the core of its architecture, enabling efficient management of complex, interconnected data structures 
+            while maintaining the flexibility and scalability that modern applications demand.
+        </p>
+        <p>
+            Built on top of <strong>KuzuDB</strong>, LadybugDB inherits a robust foundation for graph data management. 
+            KuzuDB was previously developed by Kùzu Inc., bringing enterprise-grade reliability and performance to 
+            the open-source graph database ecosystem.
+        </p>
+        
+        <h2>Why Separation of Compute and Storage Matters</h2>
+        <p>
+            Every modern database needs to consider the <strong>separation of compute and storage</strong> as a 
+            fundamental architectural principle. This concept is no longer optional but essential for building 
+            scalable, cost-effective data systems.
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Key Benefits of Compute-Storage Separation:</h3>
+            <ul>
+                <li><strong>Independent Scaling:</strong> Scale compute resources for query processing separately 
+                from storage capacity, optimizing costs and performance based on actual workload demands.</li>
+                
+                <li><strong>Cost Efficiency:</strong> Store massive amounts of data cheaply in object storage 
+                (like S3, Azure Blob Storage, or Google Cloud Storage) while only paying for compute resources 
+                when actively processing queries.</li>
+                
+                <li><strong>Elasticity:</strong> Spin up multiple compute nodes to handle peak loads and scale 
+                them down during quiet periods, all while accessing the same persistent data layer.</li>
+                
+                <li><strong>Durability and Availability:</strong> Leverage cloud object storage's built-in 
+                redundancy, replication, and disaster recovery capabilities without implementing these complex 
+                features in the database layer.</li>
+                
+                <li><strong>Multi-tenant Efficiency:</strong> Multiple database instances or workloads can share 
+                the same storage layer, each with their own compute resources, reducing data duplication and 
+                management overhead.</li>
+                
+                <li><strong>Operational Simplicity:</strong> Simplify backup, recovery, and data lifecycle 
+                management by delegating storage concerns to proven object storage systems.</li>
+            </ul>
+        </div>
+        
+        <p>
+            By embracing this architectural pattern, LadybugDB enables organizations to build data systems that 
+            can grow seamlessly from prototype to production, handling everything from small datasets to petabyte-scale 
+            graph data without requiring fundamental architectural changes.
+        </p>
+        
+        <h2>Object Storage at the Core</h2>
+        <p>
+            LadybugDB's focus on object storage means it's designed from the ground up to work efficiently with 
+            cloud-native storage systems. This approach aligns perfectly with modern cloud architectures where 
+            object storage provides unlimited scalability, high durability, and cost-effective long-term data retention.
+        </p>
+        <p>
+            Whether you're building knowledge graphs, recommendation systems, fraud detection networks, or social 
+            network analytics, LadybugDB provides the graph database capabilities you need while ensuring your 
+            data architecture remains flexible and future-proof.
+        </p>
+        
+        <div class="footer">
+            <p>LadybugDB - Built on KuzuDB | Designed for the Cloud Era</p>
+        </div>
+    </div>
+</body>
+</html>
