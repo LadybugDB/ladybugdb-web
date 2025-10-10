@@ -4,167 +4,231 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LadybugDB - Graph Database for Object Storage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 50%, #0f0f0f 100%);
             min-height: 100vh;
             padding: 2rem;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: #fafafa;
+            border-radius: 16px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
             padding: 3rem;
+            border: 2px solid #dc2626;
         }
-        
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            max-width: 150px;
+            max-height: 150px;
+            width: auto;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+        }
+
         h1 {
-            color: #667eea;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            color: #dc2626;
+            font-family: 'Crimson Text', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin: 0;
             text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .tagline {
             text-align: center;
-            font-size: 1.25rem;
-            color: #666;
+            font-size: 1.3rem;
+            color: #4a4a4a;
             margin-bottom: 2.5rem;
             font-style: italic;
+            font-family: 'Crimson Text', serif;
+            font-weight: 400;
         }
-        
+
         h2 {
-            color: #764ba2;
-            font-size: 1.75rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 0.5rem;
+            color: #1a1a1a;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 3px solid #dc2626;
+            padding-bottom: 0.6rem;
+            position: relative;
         }
-        
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #1a1a1a;
+        }
+
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             text-align: justify;
+            font-weight: 400;
+            color: #2a2a2a;
         }
-        
+
         .highlight-box {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #fef2f2 0%, #f8f8f8 100%);
+            border-left: 6px solid #dc2626;
+            border-right: 2px solid #dc2626;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
         }
-        
+
         .highlight-box h3 {
-            color: #667eea;
-            margin-bottom: 0.75rem;
-            font-size: 1.25rem;
+            color: #dc2626;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
-        
+
         ul {
             margin-left: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
-        
+
         li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
+            color: #2a2a2a;
         }
-        
+
         .footer {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #ddd;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #dc2626;
             text-align: center;
-            color: #666;
-            font-size: 0.9rem;
+            color: #4a4a4a;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
         }
-        
+
         strong {
-            color: #764ba2;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        a {
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #b91c1c;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>LadybugDB</h1>
-        <p class="tagline">The Place to store your knowledge</p>
-        
+        <div class="header">
+            <img src="logo.png" alt="LadybugDB Logo" class="logo">
+            <div>
+                <h1>LadybugDB</h1>
+                <p class="tagline">Where Agents come to store knowledge</p>
+            </div>
+        </div>
+
         <h2>What is LadybugDB?</h2>
         <p>
-            LadybugDB is a modern graph database designed with a primary focus on <strong>object storage</strong>. 
-            Unlike traditional databases that treat storage as an afterthought, LadybugDB places object storage 
-            at the core of its architecture, enabling efficient management of complex, interconnected data structures 
+            LadybugDB is a modern graph database designed with a primary focus on <strong>object storage</strong>.
+            Unlike traditional databases that treat storage as an afterthought, LadybugDB places object storage
+            at the core of its architecture, enabling efficient management of complex, interconnected data structures
             while maintaining the flexibility and scalability that modern applications demand.
         </p>
         <p>
-            Built on top of <strong>KuzuDB</strong>, LadybugDB inherits a robust and modular implementation of [cypher](https://kuzudb.com/docs/developer-guide/database-internal/). 
+            Built on top of <strong>KuzuDB</strong>, LadybugDB inherits a robust and modular implementation of [cypher](https://kuzudb.com/docs/developer-guide/database-internal/).
             KuzuDB was previously developed by Kùzu Inc.
         </p>
-        
+
         <h2>Why Separation of Compute and Storage Matters</h2>
         <p>
-            Every modern database needs to consider the <strong>separation of compute and storage</strong> as a 
-            fundamental architectural principle. This concept is no longer optional but essential for building 
+            Every modern database needs to consider the <strong>separation of compute and storage</strong> as a
+            fundamental architectural principle. This concept is no longer optional but essential for building
             scalable, cost-effective data systems.
         </p>
-        
+
         <div class="highlight-box">
             <h3>Key Benefits of Compute-Storage Separation:</h3>
             <ul>
-                <li><strong>Independent Scaling:</strong> Scale compute resources for query processing separately 
+                <li><strong>Independent Scaling:</strong> Scale compute resources for query processing separately
                 from storage capacity, optimizing costs and performance based on actual workload demands.</li>
-                
-                <li><strong>Cost Efficiency:</strong> Store massive amounts of data cheaply in object storage 
-                (like S3, Azure Blob Storage, or Google Cloud Storage) while only paying for compute resources 
+
+                <li><strong>Cost Efficiency:</strong> Store massive amounts of data cheaply in object storage
+                (like S3, Azure Blob Storage, or Google Cloud Storage) while only paying for compute resources
                 when actively processing queries.</li>
-                
-                <li><strong>Elasticity:</strong> Spin up multiple compute nodes to handle peak loads and scale 
+
+                <li><strong>Elasticity:</strong> Spin up multiple compute nodes to handle peak loads and scale
                 them down during quiet periods, all while accessing the same persistent data layer.</li>
-                
-                <li><strong>Durability and Availability:</strong> Leverage cloud object storage's built-in 
-                redundancy, replication, and disaster recovery capabilities without implementing these complex 
+
+                <li><strong>Durability and Availability:</strong> Leverage cloud object storage's built-in
+                redundancy, replication, and disaster recovery capabilities without implementing these complex
                 features in the database layer.</li>
-                
-                <li><strong>Multi-tenant Efficiency:</strong> Multiple database instances or workloads can share 
-                the same storage layer, each with their own compute resources, reducing data duplication and 
+
+                <li><strong>Multi-tenant Efficiency:</strong> Multiple database instances or workloads can share
+                the same storage layer, each with their own compute resources, reducing data duplication and
                 management overhead.</li>
-                
-                <li><strong>Operational Simplicity:</strong> Simplify backup, recovery, and data lifecycle 
+
+                <li><strong>Operational Simplicity:</strong> Simplify backup, recovery, and data lifecycle
                 management by delegating storage concerns to proven object storage systems.</li>
             </ul>
         </div>
-        
+
         <p>
-            By embracing this architectural pattern, LadybugDB enables organizations to build data systems that 
-            can grow seamlessly from prototype to production, handling everything from small datasets to petabyte-scale 
+            By embracing this architectural pattern, LadybugDB enables organizations to build data systems that
+            can grow seamlessly from prototype to production, handling everything from small datasets to petabyte-scale
             graph data without requiring fundamental architectural changes.
         </p>
-        
+
         <h2>Object Storage at the Core</h2>
         <p>
-            LadybugDB's focus on object storage means it's designed from the ground up to work efficiently with 
-            cloud-native storage systems. This approach aligns perfectly with modern cloud architectures where 
+            LadybugDB's focus on object storage means it's designed from the ground up to work efficiently with
+            cloud-native storage systems. This approach aligns perfectly with modern cloud architectures where
             object storage provides unlimited scalability, high durability, and cost-effective long-term data retention.
         </p>
         <p>
-            Whether you're building knowledge graphs, recommendation systems, fraud detection networks, or social 
-            network analytics, LadybugDB provides the graph database capabilities you need while ensuring your 
+            Whether you're building knowledge graphs, recommendation systems, fraud detection networks, or social
+            network analytics, LadybugDB provides the graph database capabilities you need while ensuring your
             data architecture remains flexible and future-proof.
         </p>
-        
+
         <div class="footer">
-            <p>LadybugDB - Built on KuzuDB | Designed for the Cloud Era</p>
+            <p>LadybugDB | Designed for AI in the Era of Experience</p>
         </div>
     </div>
 </body>
