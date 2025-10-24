@@ -176,14 +176,14 @@ a:hover {
 }
 
 .nav-links a {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #dc2626;
     transition: color 0.3s;
 }
 
 .nav-links a:hover {
     color: #b91c1c;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /* Mobile-first responsive design */
@@ -285,6 +285,10 @@ a:hover {
     }
 
     .social-links a {
+        font-size: 1.8rem;
+    }
+
+    .nav-links a {
         font-size: 1.8rem;
     }
 }
