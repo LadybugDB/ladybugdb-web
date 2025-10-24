@@ -169,23 +169,6 @@ a:hover {
     text-decoration: none;
 }
 
-.nav-links {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.nav-links a {
-    font-size: 1.5rem;
-    color: #dc2626;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #b91c1c;
-    text-decoration: none;
-}
-
 /* Mobile-first responsive design */
 @media (max-width: 768px) {
     body {
@@ -279,16 +262,7 @@ a:hover {
         gap: 1.5rem;
     }
 
-    .nav-links {
-        margin-top: 1rem;
-        gap: 1.5rem;
-    }
-
     .social-links a {
-        font-size: 1.8rem;
-    }
-
-    .nav-links a {
         font-size: 1.8rem;
     }
 }
