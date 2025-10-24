@@ -29,6 +29,7 @@ body {
     justify-content: space-between;
     gap: 1.5rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 .logo-and-title {
@@ -50,7 +51,7 @@ body {
 h1 {
     color: #dc2626;
     font-family: 'Crimson Text', serif;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     font-weight: 600;
     margin: 0;
     text-align: center;
@@ -59,7 +60,7 @@ h1 {
 
 .tagline {
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #4a4a4a;
     margin-bottom: 2.5rem;
     font-style: italic;
@@ -203,12 +204,12 @@ a:hover {
     }
 
     h1 {
-        font-size: 2.2rem;
+        font-size: 2.0rem;
         margin-bottom: 0.5rem;
     }
 
     .tagline {
-        font-size: 1.1rem;
+        font-size: 1.0rem;
         margin-bottom: 2rem;
         padding: 0 0.5rem;
     }
@@ -262,7 +263,7 @@ a:hover {
     }
 
     .social-links a {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -277,11 +278,11 @@ a:hover {
     }
 
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .tagline {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     h2 {
