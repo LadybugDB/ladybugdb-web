@@ -3,99 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LadybugDB - Graph Database for Object Storage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>LadybugDB - Open Source Columnar Graph Database</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo-and-title">
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/" class="logo-link" aria-label="LadybugDB Home">
+                <img src="logo.svg" alt="LadybugDB" class="ladybug-logo">
+            </a>
+        </div>
+        <nav class="header-nav">
+            <a href="https://docs.ladybugdb.com" class="nav-link">Docs</a>
+            <span class="nav-separator">/</span>
+            <a href="https://blog.ladybugdb.com" class="nav-link">Blog</a>
+            <span class="nav-separator">/</span>
+            <a href="https://github.com/LadybugDB/ladybug" class="nav-link">GitHub</a>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">LadybugDB</h1>
+                <p class="hero-tagline">An <span class="accent">open source</span> <span class="accent">columnar</span> <span class="accent">graph</span> database</p>
+            </div>
+            <div class="hero-visual">
                 <img src="logo.png" alt="LadybugDB Logo" class="logo">
-                <div>
-                    <h1>LadybugDB</h1>
-                    <p class="tagline">A Graph Database with a firm commitment to open source</p>
+            </div>
+            <div class="install-section">
+                <div class="install-bar">
+                    <select class="install-select" id="installSelect">
+                        <option value="curl">Curl</option>
+                        <option value="brew">Brew</option>
+                    </select>
+                    <div class="install-command-wrapper">
+                        <code class="install-command" id="installCommand">curl -fsSL https://install.ladybugdb.com/install.sh | sh</code>
+                        <button class="copy-btn" id="copyBtn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="social-links">
-                <a href="https://docs.ladybugdb.com" target="_blank" aria-label="Documentation"><i class="fas fa-book"></i></a>
-                <a href="https://blog.ladybugdb.com" target="_blank" aria-label="Blog"><i class="fas fa-blog"></i></a>
-                <a href="https://github.com/LadybugDB/ladybug" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://x.com/lbugdb" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
-                <a href="https://www.linkedin.com/company/ladybugdb/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2>What is LadybugDB?</h2>
             </div>
-        </div>
+            <div class="section-content">
+                <p class="lead">LadybugDB is a modern graph database designed with a primary focus on <strong>object storage</strong>.</p>
+                <p>Unlike traditional databases that treat storage as an afterthought, LadybugDB places object storage at the core of its architecture, enabling efficient management of complex, interconnected data structures while maintaining the flexibility and scalability that modern applications demand.</p>
+            </div>
+        </section>
 
-        <h2>What is LadybugDB?</h2>
-        <p>
-            LadybugDB is a modern graph database designed with a primary focus on <strong>object storage</strong>.
-            Unlike traditional databases that treat storage as an afterthought, LadybugDB places object storage
-            at the core of its architecture, enabling efficient management of complex, interconnected data structures
-            while maintaining the flexibility and scalability that modern applications demand.
-        </p>
-        <p>
-            Built on top of <strong>KuzuDB</strong>, LadybugDB inherits a robust and modular implementation of <a href="https://docs.ladybugdb.com/cypher/">cypher</a>.
-            KuzuDB was previously developed by Kùzu Inc.
-        </p>
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2>Why We're Building LadybugDB</h2>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Open Source</h3>
+                    <p>A graph database with a firm commitment to open source development and community collaboration.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Columnar Storage</h3>
+                    <p>Built from the ground up with columnar storage for optimal analytics and query performance.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Graph Native</h3>
+                    <p>Native graph database architecture designed for efficient traversal and relationship queries.</p>
+                </div>
+            </div>
+        </section>
 
-        <h2>Why Separation of Compute and Storage Matters</h2>
-        <p>
-            Every modern database needs to consider the <strong>separation of compute and storage</strong> as a
-            fundamental architectural principle. This concept is no longer optional but essential for building
-            scalable, cost-effective data systems.
-        </p>
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2>Architecture</h2>
+            </div>
+            <div class="section-content">
+                <p class="lead">Built on top of <strong>KuzuDB</strong>, LadybugDB inherits a robust and modular implementation of <a href="https://docs.ladybugdb.com/cypher/">cypher</a>.</p>
+                <p>Our architecture embraces the separation of compute and storage as a fundamental principle, enabling independent scaling of resources and cost-effective operation at any scale.</p>
+            </div>
+        </section>
 
-        <div class="highlight-box">
-            <h3>Key Benefits of Compute-Storage Separation:</h3>
-            <ul>
-                <li><strong>Independent Scaling:</strong> Scale compute resources for query processing separately
-                from storage capacity, optimizing costs and performance based on actual workload demands.</li>
+        <section class="section highlight">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2>Key Benefits</h2>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics Ready</h3>
+                    <p>Columnar storage format optimized for analytical workloads and aggregations.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Native</h3>
+                    <p>Designed to work seamlessly with object storage systems like S3 and GCS.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>High Performance</h3>
+                    <p>Optimized query engine with support for parallel execution and vectorized operations.</p>
+                </div>
+            </div>
+        </section>
 
-                <li><strong>Cost Efficiency:</strong> Store massive amounts of data cheaply in object storage
-                (like S3, Azure Blob Storage, or Google Cloud Storage) while only paying for compute resources
-                when actively processing queries.</li>
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2>Get Started</h2>
+            </div>
+            <div class="section-content">
+                <p>Explore the <a href="https://docs.ladybugdb.com" target="_blank" class="link">documentation</a> to learn more about LadybugDB's features and capabilities. Check out the <a href="https://github.com/LadybugDB/ladybug" target="_blank" class="link">project on GitHub</a> to contribute or build your own applications.</p>
+            </div>
+        </section>
 
-                <li><strong>Elasticity:</strong> Spin up multiple compute nodes to handle peak loads and scale
-                them down during quiet periods, all while accessing the same persistent data layer.</li>
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-label">LadybugDB</span>
+                    <a href="mailto:social@ladybugdb.com" class="footer-email">social@ladybugdb.com</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/LadybugDB/ladybug" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://x.com/lbugdb" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.linkedin.com/company/ladybugdb/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://discord.gg/EKMsvPBX" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 LadybugDB. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+    <script>
+        const commands = {
+            curl: 'curl -fsSL https://install.ladybugdb.com/install.sh | sh',
+            brew: 'brew install ladybug'
+        };
 
-                <!--
-                <li><strong>Durability and Availability:</strong> Leverage cloud object storage's built-in
-                redundancy, replication, and disaster recovery capabilities without implementing these complex
-                features in the database layer.</li>
+        const installCommand = document.getElementById('installCommand');
+        const copyBtn = document.getElementById('copyBtn');
+        const installSelect = document.getElementById('installSelect');
 
-                <li><strong>Multi-tenant Efficiency:</strong> Multiple database instances or workloads can share
-                the same storage layer, each with their own compute resources, reducing data duplication and
-                management overhead.</li>
+        installSelect.addEventListener('change', () => {
+            installCommand.textContent = commands[installSelect.value];
+        });
 
-                <li><strong>Operational Simplicity:</strong> Simplify backup, recovery, and data lifecycle
-                management by delegating storage concerns to proven object storage systems.</li>
-                -->
-            </ul>
-        </div>
-
-        <p>
-            By embracing this architectural pattern, LadybugDB enables organizations to build data systems that
-            can grow seamlessly from prototype to production, handling everything from small datasets to petabyte-scale
-            graph data without requiring fundamental architectural changes.
-        </p>
-
-        <h2>Object Storage at the Core</h2>
-        <p>
-            LadybugDB's focus on object storage means it's designed from the ground up to work efficiently with
-            cloud-native storage systems. This approach aligns perfectly with modern cloud architectures where
-            object storage provides unlimited scalability, high durability, and cost-effective long-term data retention.
-        </p>
-        <p>
-            Whether you're building knowledge graphs, recommendation systems, fraud detection networks, or social
-            network analytics, LadybugDB provides the graph database capabilities you need while ensuring your
-            data architecture remains flexible and future-proof.
-        </p>
-
-        <div class="footer">
-            <p><a href="faq.html">FAQ</a> | <a href="roadmap.html">Roadmap</a></p>
-            <p>LadybugDB | Contact: <a href="mailto:social@ladybugdb.com">social@ladybugdb.com</a></p>
-        </div>
-    </div>
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(installCommand.textContent).then(() => {
+                const icon = copyBtn.querySelector('i');
+                icon.classList.remove('fa-copy');
+                icon.classList.add('fa-check');
+                setTimeout(() => {
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-copy');
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>
