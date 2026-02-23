@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Body -->
+  <ellipse cx="100" cy="110" rx="60" ry="70" fill="#E74C3C"/>
+  
+  <!-- Head -->
+  <circle cx="100" cy="50" r="25" fill="#2C3E50"/>
+  
+  <!-- Center line -->
+  <line x1="100" y1="50" x2="100" y2="180" stroke="#2C3E50" stroke-width="3"/>
+  
+  <!-- Spots - left side -->
+  <circle cx="70" cy="80" r="10" fill="#2C3E50"/>
+  <circle cx="65" cy="110" r="12" fill="#2C3E50"/>
+  <circle cx="70" cy="145" r="10" fill="#2C3E50"/>
+  
+  <!-- Spots - right side -->
+  <circle cx="130" cy="80" r="10" fill="#2C3E50"/>
+  <circle cx="135" cy="110" r="12" fill="#2C3E50"/>
+  <circle cx="130" cy="145" r="10" fill="#2C3E50"/>
+  
+  <!-- Antennae -->
+  <line x1="90" y1="35" x2="80" y2="20" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+  <line x1="110" y1="35" x2="120" y2="20" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="80" cy="20" r="3" fill="#2C3E50"/>
+  <circle cx="120" cy="20" r="3" fill="#2C3E50"/>
+</svg>
