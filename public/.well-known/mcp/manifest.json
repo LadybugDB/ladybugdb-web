@@ -1,0 +1,29 @@
+{
+  "name": "LadybugDB MCP Server",
+  "description": "MCP server for LadybugDB — the embedded columnar graph database. Execute Cypher queries, manage databases, and inspect schemas via MCP tools. Enables Claude, ChatGPT, and other AI agents to interact with LadybugDB natively.",
+  "version": "1.0.0",
+  "transport": "streamable-http",
+  "url": "https://mcp.ladybugdb.com",
+  "capabilities": {
+    "tools": {
+      "list": true,
+      "call": true
+    },
+    "resources": {
+      "list": true,
+      "read": true
+    },
+    "prompts": {
+      "list": false,
+      "get": false
+    }
+  },
+  "authentication": {
+    "scheme": "none"
+  },
+  "contact": {
+    "name": "LadybugDB Support",
+    "email": "social@ladybugdb.com",
+    "url": "https://ladybugdb.com"
+  }
+}
