@@ -1,0 +1,342 @@
+openapi: "3.0.3"
+info:
+  title: LadybugDB API
+  description: >
+    REST API for LadybugDB — the embedded columnar graph database for agentic
+    solutions in highly regulated industries. Query graphs using Cypher, manage
+    databases, and integrate with your agentic workflows.
+
+    Full documentation: https://docs.ladybugdb.com
+    SDK: npm install ladybugdb / pip install ladybugdb
+  version: "1.0.0"
+  contact:
+    name: LadybugDB Support
+    email: social@ladybugdb.com
+    url: https://ladybugdb.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.ladybugdb.com
+    description: Production API server
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /query:
+    post:
+      summary: Execute a Cypher query
+      description: >
+        Execute a read-only or write Cypher query against the graph database.
+        Supports parameterized queries to prevent injection.
+      operationId: executeQuery
+      tags: [Query]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+                  description: Cypher query string
+                  example: "MATCH (n:Entity) RETURN n.name, n.type LIMIT 10"
+                parameters:
+                  type: object
+                  description: Query parameters (named)
+                  example: { limit: 10, type: "Person" }
+                database:
+                  type: string
+                  description: Database name (default: 'default')
+                  default: default
+      responses:
+        "200":
+          description: Successful query execution
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  columns:
+                    type: array
+                    items: { type: string }
+                    description: Column names in the result set
+                  data:
+                    type: array
+                    items:
+                      type: array
+                      description: Row of values matching columns order
+                    description: Result rows
+                  summary:
+                    $ref: "#/components/schemas/QuerySummary"
+        "400":
+          description: Bad request (invalid query syntax)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /schema:
+    get:
+      summary: Get database schema
+      description: >
+        Returns the current graph schema including node labels, relationship
+        types, and property constraints.
+      operationId: getSchema
+      tags: [Schema]
+      parameters:
+        - name: database
+          in: query
+          schema: { type: string, default: default }
+          description: Database name
+      responses:
+        "200":
+          description: Schema information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schema"
+
+  /schema/node/{label}:
+    post:
+      summary: Create node label
+      description: >
+        Create a new node label in the schema with optional property definitions.
+      operationId: createNodeLabel
+      tags: [Schema]
+      parameters:
+        - name: label
+          in: path
+          required: true
+          schema: { type: string }
+          description: Node label name
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/PropertyDefinition"
+      responses:
+        "201":
+          description: Node label created
+        "409":
+          description: Node label already exists
+
+  /schema/relationship/{type}:
+    post:
+      summary: Create relationship type
+      description: >
+        Create a new relationship type with optional property definitions.
+      operationId: createRelationshipType
+      tags: [Schema]
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema: { type: string }
+          description: Relationship type name
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/PropertyDefinition"
+      responses:
+        "201":
+          description: Relationship type created
+        "409":
+          description: Relationship type already exists
+
+  /database:
+    get:
+      summary: List databases
+      description: List all available databases on the server.
+      operationId: listDatabases
+      tags: [Database]
+      responses:
+        "200":
+          description: List of databases
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  databases:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        path: { type: string }
+                        size: { type: integer, description: Size in bytes }
+                        node_count: { type: integer }
+                        relationship_count: { type: integer }
+    post:
+      summary: Create a database
+      description: Create a new empty database.
+      operationId: createDatabase
+      tags: [Database]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                  description: Database name
+                path:
+                  type: string
+                  description: Optional custom storage path
+      responses:
+        "201":
+          description: Database created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name: { type: string }
+                  path: { type: string }
+                  status: { type: string, enum: [created] }
+        "409":
+          description: Database already exists
+
+  /database/{name}:
+    delete:
+      summary: Delete a database
+      description: Delete a database and all its data.
+      operationId: deleteDatabase
+      tags: [Database]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema: { type: string }
+          description: Database name to delete
+      responses:
+        "204":
+          description: Database deleted
+        "404":
+          description: Database not found
+
+  /health:
+    get:
+      summary: Health check
+      description: Check if the database server is running and healthy.
+      operationId: healthCheck
+      tags: [Health]
+      responses:
+        "200":
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, enum: ["ok"] }
+                  version: { type: string }
+                  uptime: { type: integer, description: Uptime in seconds }
+
+components:
+  schemas:
+    QuerySummary:
+      type: object
+      properties:
+        query: { type: string }
+        query_type:
+          type: string
+          enum: [READ, WRITE, DDL, COPY]
+          description: Type of query executed
+        num_rows: { type: integer }
+        execution_time_ms: { type: number }
+        database: { type: string }
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { type: string }
+          required: [code, message]
+
+    PropertyDefinition:
+      type: object
+      required: [name, type]
+      properties:
+        name:
+          type: string
+          description: Property name
+        type:
+          type: string
+          enum: [STRING, INT64, DOUBLE, BOOL, DATE, TIMESTAMP, INT32, INT16, FLOAT, BLOB]
+          description: Property data type
+        primary_key:
+          type: boolean
+          description: Whether this property is the primary key
+          default: false
+        nullable:
+          type: boolean
+          description: Whether the property can be null
+          default: false
+        default:
+          description: Default value for the property
+
+    Schema:
+      type: object
+      properties:
+        database: { type: string }
+        node_labels:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              properties:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PropertyDefinition"
+              count: { type: integer, description: Number of nodes with this label }
+        relationship_types:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              properties:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PropertyDefinition"
+              count: { type: integer, description: Number of relationships of this type }
+
+tags:
+  - name: Query
+    description: Cypher query execution endpoints
+  - name: Schema
+    description: Schema management endpoints
+  - name: Database
+    description: Database management endpoints
+  - name: Health
+    description: Health and monitoring endpoints
