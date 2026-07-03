@@ -1,0 +1,21 @@
+# LadybugDB
+> Embedded columnar graph database for agentic solutions in highly regulated industries. The successor to Kuzu.
+
+## Docs
+- [LadybugDB Documentation](https://docs.ladybugdb.com): Getting started, guides, and reference documentation
+- [LadybugDB API Reference](https://docs.ladybugdb.com/api): Full API reference documentation
+- [LadybugDB OpenAPI Spec](https://ladybugdb.com/openapi.json): OpenAPI 3.0 specification
+- [LadybugDB MCP Server](https://ladybugdb.com/.well-known/mcp/manifest.json): Model Context Protocol manifest
+
+## SDKs & Packages
+- [LadybugDB npm package](https://www.npmjs.com/package/ladybugdb): JavaScript/TypeScript SDK
+- [LadybugDB PyPI package](https://pypi.org/project/ladybugdb/): Python SDK
+
+## Code
+- [LadybugDB GitHub](https://github.com/LadybugDB/ladybug): Source code repository
+
+## Resources
+- [LadybugDB Book](https://leanpub.com/ladybugdb): Official book on Leanpub
+- [LadybugDB Blog](https://blog.ladybugdb.com): Product updates and technical posts
+- [LadybugDB Discord](https://discord.gg/zz9tsw53Bd): Community chat and support
+- [LadybugDB VLDB 2023 Paper](https://vldb.org/cidrdb/papers/2023/p48-jin.pdf): Research publication
