@@ -1,9 +1,10 @@
 {
-  "name": "LadybugDB MCP Server",
-  "description": "MCP server for LadybugDB — the embedded columnar graph database. Execute Cypher queries, manage databases, and inspect schemas via MCP tools. Enables Claude, ChatGPT, and other AI agents to interact with LadybugDB natively.",
-  "version": "1.0.0",
-  "transport": "streamable-http",
-  "url": "https://mcp.ladybugdb.com",
+  "name": "mcp-server-ladybug",
+  "description": "MCP server for LadybugDB — the embedded columnar graph database with Cypher query language. Connects to a local LadybugDB database instance and enables AI agents to execute Cypher queries, inspect schemas, and interact with graph data natively.\n\n- Install: pip install mcp-server-ladybug\n- GitHub: https://github.com/LadybugDB/mcp-server-ladybug\n- PyPI: https://pypi.org/project/mcp-server-ladybug/",
+  "version": "0.1.2",
+  "transport": "stdio",
+  "command": "uvx",
+  "args": ["mcp-server-ladybug", "--db-path", ":memory:"],
   "capabilities": {
     "tools": {
       "list": true,
@@ -14,16 +15,14 @@
       "read": true
     },
     "prompts": {
-      "list": false,
-      "get": false
+      "list": true,
+      "get": true
     }
   },
-  "authentication": {
-    "scheme": "none"
-  },
   "contact": {
-    "name": "LadybugDB Support",
+    "name": "LadybugDB",
+    "url": "https://ladybugdb.com",
     "email": "social@ladybugdb.com",
-    "url": "https://ladybugdb.com"
+    "source": "https://github.com/LadybugDB/mcp-server-ladybug"
   }
 }

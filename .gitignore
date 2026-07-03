@@ -3,4 +3,3 @@
 node_modules/
 dist/
 .astro/
-mcp-server/node_modules/

@@ -5,7 +5,9 @@
 - [LadybugDB Documentation](https://docs.ladybugdb.com): Getting started, guides, and reference documentation
 - [LadybugDB API Reference](https://docs.ladybugdb.com/api): Full API reference documentation
 - [LadybugDB OpenAPI Spec](https://ladybugdb.com/openapi.json): OpenAPI 3.0 specification
-- [LadybugDB MCP Server](https://ladybugdb.com/.well-known/mcp/manifest.json): Model Context Protocol manifest
+- [LadybugDB MCP Server](https://github.com/LadybugDB/mcp-server-ladybug): Model Context Protocol server (Python) — connects to local LadybugDB instances
+- [LadybugDB MCP Manifest](https://ladybugdb.com/.well-known/mcp/manifest.json): MCP server manifest
+- [LadybugDB MCP Server on PyPI](https://pypi.org/project/mcp-server-ladybug/): `pip install mcp-server-ladybug`
 
 ## SDKs & Packages
 - [LadybugDB npm package](https://www.npmjs.com/package/ladybugdb): JavaScript/TypeScript SDK
