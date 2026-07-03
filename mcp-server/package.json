@@ -1,0 +1,17 @@
+{
+  "name": "ladybugdb-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP (Model Context Protocol) server for LadybugDB — expose database query and management as AI agent tools via Streamable HTTP transport",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
