@@ -1,5 +1,5 @@
 # LadybugDB
-> Embedded columnar graph database for agentic solutions in highly regulated industries. The successor to Kuzu.
+> DuckDB for graphs — the embedded columnar graph database and successor to KuzuDB. Built for agentic solutions in highly regulated industries.
 
 ## Docs
 - [LadybugDB Documentation](https://docs.ladybugdb.com): Getting started, guides, and reference documentation

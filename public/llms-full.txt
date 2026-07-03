@@ -1,6 +1,6 @@
 # LadybugDB - Full Developer Resource Guide
 
-> LadybugDB is the embedded columnar graph database for agentic solutions in highly regulated industries. The successor to Kuzu.
+> LadybugDB is DuckDB for graphs — the embedded columnar graph database and successor to KuzuDB. Built for agentic solutions in highly regulated industries.
 
 ## Product Overview
 
