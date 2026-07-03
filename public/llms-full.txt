@@ -47,7 +47,12 @@ LadybugDB is a high-performance embedded columnar graph database with a Cypher q
 ## MCP (Model Context Protocol)
 
 - **MCP Manifest**: https://ladybugdb.com/.well-known/mcp/manifest.json
-- **MCP Server**: MCP server exposing LadybugDB query and management capabilities
+- **MCP Server (GitHub)**: https://github.com/LadybugDB/mcp-server-ladybug
+- **MCP Server (PyPI)**: https://pypi.org/project/mcp-server-ladybug/
+  - Install: `pip install mcp-server-ladybug`
+  - Run: `mcp-server-ladybug --db-path :memory:` or `mcp-server-ladybug --db-path /path/to/my.lbdb`
+  - Transport: stdio (default) or SSE (--transport sse --port 3000)
+  - Connects to a real LadybugDB database instance via the `real-ladybug` Python package
 
 ## Community & Support
 
