@@ -1,0 +1,69 @@
+# LadybugDB - Full Developer Resource Guide
+
+> LadybugDB is the embedded columnar graph database for agentic solutions in highly regulated industries. The successor to Kuzu.
+
+## Product Overview
+
+LadybugDB is a high-performance embedded columnar graph database with a Cypher query engine. It is designed for agentic AI applications in highly regulated industries including legal tech, medical AI, and finance.
+
+### Key Features
+- Columnar storage with vectorized execution
+- Embedded and serverless deployment
+- Cypher query language support
+- MIT open source license
+- Zero external dependencies
+- Multi-language SDKs (Python, Node.js, Rust)
+
+## Documentation
+
+- **Main Documentation**: https://docs.ladybugdb.com
+  - Getting started guides
+  - Installation instructions
+  - Query language reference
+  - SDK usage guides
+  - Migration guides from Kuzu
+- **API Reference**: https://docs.ladybugdb.com/api
+
+## API Specification
+
+- **OpenAPI 3.0 Spec**: https://ladybugdb.com/openapi.json
+- **OpenAPI 3.0 Spec (YAML)**: https://ladybugdb.com/openapi.yaml
+
+## SDK Packages
+
+- **npm**: https://www.npmjs.com/package/ladybugdb
+  - Package: `ladybugdb`
+  - Install: `npm install ladybugdb`
+- **PyPI**: https://pypi.org/project/ladybugdb/
+  - Package: `ladybugdb`  
+  - Install: `pip install ladybugdb`
+
+## Source Code
+
+- **GitHub Repository**: https://github.com/LadybugDB/ladybug
+- **License**: MIT
+- **Languages**: C++, Python, TypeScript
+
+## MCP (Model Context Protocol)
+
+- **MCP Manifest**: https://ladybugdb.com/.well-known/mcp/manifest.json
+- **MCP Server**: MCP server exposing LadybugDB query and management capabilities
+
+## Community & Support
+
+- **Discord Community**: https://discord.gg/zz9tsw53Bd
+- **Twitter/X**: https://x.com/lbugdb
+- **LinkedIn**: https://www.linkedin.com/company/ladybugdb/
+- **Email**: social@ladybugdb.com
+
+## Educational Resources
+
+- **Official Book**: https://leanpub.com/ladybugdb
+- **Blog**: https://blog.ladybugdb.com
+- **VLDB 2023 Research Paper**: https://vldb.org/cidrdb/papers/2023/p48-jin.pdf
+
+## Company
+
+- **Website**: https://ladybugdb.com
+- **Sponsor**: Ladybug Memory (https://ladybugmem.ai)
+- **Copyright**: © 2026 LadybugDB
