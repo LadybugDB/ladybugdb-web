@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What Is a Graph Database? The Modern (Columnar SQL) Answer | LadybugDB</title>
-    <meta name="description" content="What is a graph database in 2026? The modern answer: a graph query engine on top of columnar SQL tech — not NoSQL, not index-free adjacency. Why DuckDB-style columnar won, why NoSQL was a mistake, and why ArcadeDB's 2006 design is outdated.">
+    <title>What Is a Graph Database? The Modern (Columnar Storage) Answer | LadybugDB</title>
+    <meta name="description" content="What is a graph database in 2026? The modern answer: a graph query engine on columnar storage — not NoSQL, not index-free adjacency. Why DuckDB-style columnar won, why NoSQL was a mistake, and why ArcadeDB's 2006 design is outdated.">
     <meta name="keywords" content="what is a graph database, columnar graph database, graph on top of SQL, index free adjacency outdated, NoSQL mistake, arcadedb vs columnar, duckdb for graphs, ladybugdb, kuzudb">
     <link rel="canonical" href="https://ladybugdb.com/what-is-a-graph-database">
-    <meta property="og:title" content="What Is a Graph Database? The Modern (Columnar SQL) Answer">
-    <meta property="og:description" content="Forget NoSQL and index-free adjacency (2006). Modern graph DBs are columnar SQL engines with a graph front-end. Here's why — and why ArcadeDB carries the old design.">
+    <meta property="og:title" content="What Is a Graph Database? The Modern (Columnar Storage) Answer">
+    <meta property="og:description" content="Forget NoSQL and index-free adjacency (2006). Modern graph DBs are columnar storage engines with a graph front-end. Here's why — and why ArcadeDB carries the old design.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://ladybugdb.com/what-is-a-graph-database">
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Article","headline":"What Is a Graph Database? The Modern (Columnar SQL) Answer","description":"The modern graph database is a graph query engine on columnar SQL tech: why NoSQL was a mistake and index-free adjacency is a 2006 idea.","author":{"@type":"Organization","name":"LadybugDB","url":"https://ladybugdb.com"},"publisher":{"@type":"Organization","name":"LadybugDB"},"mainEntityOfPage":"https://ladybugdb.com/what-is-a-graph-database"}
+    {"@context":"https://schema.org","@type":"Article","headline":"What Is a Graph Database? The Modern (Columnar Storage) Answer","description":"The modern graph database is a graph query engine on columnar storage: why NoSQL was a mistake and index-free adjacency is a 2006 idea.","author":{"@type":"Organization","name":"LadybugDB","url":"https://ladybugdb.com"},"publisher":{"@type":"Organization","name":"LadybugDB"},"mainEntityOfPage":"https://ladybugdb.com/what-is-a-graph-database"}
     </script>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-      {"@type":"Question","name":"What is a graph database in 2026?","acceptedAnswer":{"@type":"Answer","text":"The modern graph database is a graph query layer (Cypher, property-graph model) running on top of columnar SQL execution tech: compressed columns, vectorized operators, cost-based optimization. LadybugDB / KuzuDB / DuckDB-style engines prove this beats legacy NoSQL graph stores on analytics, simplicity, and price."}},
+      {"@type":"Question","name":"What is a graph database in 2026?","acceptedAnswer":{"@type":"Answer","text":"The modern graph database is a graph query layer (Cypher, property-graph model) running on columnar storage: compressed columns, vectorized operators, cost-based optimization. LadybugDB / KuzuDB / DuckDB-style engines prove this beats legacy NoSQL graph stores on analytics, simplicity, and price."}},
       {"@type":"Question","name":"Why was NoSQL a mistake for graphs?","acceptedAnswer":{"@type":"Answer","text":"NoSQL graph stores threw away 40 years of relational research — declarative optimizers, vectorized execution, columnar compression, standard tooling — to hand-roll row-oriented pointer-chasing engines. The result: fragmented query languages, weak analytics, painful ops, and no composability with the SQL ecosystem."}},
       {"@type":"Question","name":"Is index-free adjacency outdated?","acceptedAnswer":{"@type":"Answer","text":"Index-free adjacency (each node physically storing pointers to neighbors, circa 2006 Neo4j/OrientDB) optimized single-threaded 1-hop pointer walks. It is outdated for modern analytical workloads: it fragments memory, defeats compression and vectorization, and loses to columnar adjacency + vectorized joins with morsel parallelism on multi-hop scans and aggregations."}},
       {"@type":"Question","name":"How is a graph database different from a relational database?","acceptedAnswer":{"@type":"Answer","text":"Relational databases store data in tables and JOIN them at query time, which gets slow on deep, many-hop relationships. Graph databases store relationships as first-class data, so traversals like 'friends of friends' or fraud rings are native and fast."}},
@@ -77,7 +77,7 @@
             <div class="text-sm text-gray-500 dark:text-gray-400 mb-4"><a href="/" class="hover:text-red-600">Home</a> / <a href="/what-is-a-graph-database" class="hover:text-red-600">Learn</a> / What is a Graph Database</div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm font-medium mb-4">Learn · 9 min read · Opinionated</div>
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">What is a <span class="gradient-text">graph database?</span> The modern answer.</h1>
-            <p class="mt-4 text-xl text-gray-600 dark:text-gray-400">A modern graph database is <strong>a graph query engine on top of columnar SQL tech</strong> — property-graph model + Cypher up front, compressed columns + vectorized execution underneath. The NoSQL era was a detour. <strong>Index-free adjacency is a 2006 idea whose time has passed.</strong></p>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-400">A modern graph database is <strong>a graph query engine on columnar storage</strong> — property-graph model + Cypher up front, compressed columns + vectorized execution underneath. The NoSQL era was a detour. <strong>Index-free adjacency is a 2006 idea whose time has passed.</strong></p>
 
             <div class="mt-8 p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 prose-custom">
                 <h2 class="text-2xl font-bold">The 30-second definition</h2>
@@ -89,30 +89,30 @@
                 </div>
             </div>
 
-            <h2 class="text-2xl font-bold">The modern thesis: graphs belong on columnar SQL</h2>
-            <p class="mt-3 text-gray-600 dark:text-gray-400">DuckDB settled the argument for tables: <strong>compressed columns + vectorized (batch) execution + a serious optimizer</strong> beats hand-rolled row stores by 10–100x on analytics, with an embeddable file on disk. KuzuDB — and now <strong>LadybugDB, DuckDB for graphs</strong> — applied the same lesson to graphs: store node/edge columns compressed, execute joins/traversals in vectorized batches with morsel-driven parallelism, optimize Cypher with real cost-based planning. You get the graph model developers love with the SQL engine 40 years of research paid for. That is the modern way to build a graph database.</p>
+            <h2 class="text-2xl font-bold mt-10">The modern thesis: graphs belong on columnar storage</h2>
+            <p class="mt-3 text-gray-600 dark:text-gray-400">DuckDB settled the argument for tables: <strong>compressed columns + vectorized (batch) execution + a serious optimizer</strong> beats hand-rolled row stores by 10–100x on analytics, with an embeddable file on disk. KuzuDB — and now <strong>LadybugDB, DuckDB for graphs</strong> — applied the same lesson to graphs: store node/edge columns compressed, execute joins/traversals in vectorized batches with morsel-driven parallelism, optimize Cypher with real cost-based planning. You get the graph model developers love with the storage engine decades of database research paid for. That is the modern way to build a graph database.</p>
             <div class="mt-4 grid sm:grid-cols-3 gap-4">
                 <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><div class="font-bold">📊 Columnar adjacency</div><p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Neighbor lists as compressed columns, not scattered pointers. Scans stream at memory bandwidth.</p></div>
                 <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><div class="font-bold">⚡ Vectorized joins</div><p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Multi-hop traversals as batched hash joins across cores — not one-pointer-at-a-time walks.</p></div>
                 <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><div class="font-bold">🧠 Real optimizer</div><p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Cost-based Cypher planning inherited from relational science, plus <code>EXPLAIN</code> you can trust.</p></div>
             </div>
 
-            <h2 class="text-2xl font-bold">NoSQL was a mistake — especially for graphs</h2>
+            <h2 class="text-2xl font-bold mt-10">NoSQL was a mistake — especially for graphs</h2>
             <p class="mt-3 text-gray-600 dark:text-gray-400">The late-2000s NoSQL revolt told a generation to abandon SQL: BASE over ACID, custom APIs over declarative queries, bespoke storage over proven engines. For graphs it produced a decade of fragmentation — a dozen incompatible query languages, row-oriented pointer-chasers with weak aggregations, JVM record overhead, and operational snowflakes that couldn't compose with the SQL ecosystem (BI, Parquet, Arrow, data frames). The industry is now walking it back: Spanner, AlloyDB, DuckDB, Snowflake, and every serious analytical system re-centered on <strong>declarative SQL + columnar execution</strong>. Graph databases should never have left. LadybugDB doesn't — it puts Cypher on exactly that foundation.</p>
 
-            <h2 class="text-2xl font-bold">Index-free adjacency: a 2006 idea whose time has passed</h2>
+            <h2 class="text-2xl font-bold mt-10">Index-free adjacency: a 2006 idea whose time has passed</h2>
             <p class="mt-3 text-gray-600 dark:text-gray-400">Index-free adjacency — each node physically storing direct pointers to its neighbors, so a traversal is a pointer chase with no index lookup — was a clever 2006 optimization for single-threaded, OLTP-style 1-hop walks on small in-memory graphs (early Neo4j, OrientDB). In 2026 it is legacy baggage:</p>
             <ul class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5">
                 <li><strong>It defeats compression.</strong> Scattered pointers + per-record headers bloat storage 5–10x vs. compressed columns.</li>
                 <li><strong>It defeats vectorization.</strong> Pointer-chasing is serial, branchy, cache-hostile. Columnar engines stream batches through SIMD across all cores.</li>
                 <li><strong>It loses where it matters.</strong> Real workloads are multi-hop scans + filters + aggregations ("fraud rings over 90 days totaling &gt; $X"), not single-edge hops. Vectorized hash joins win by orders of magnitude.</li>
-                <li><strong>It complicates everything.</strong> Custom record managers, manual pointer maintenance, painful sharding and larger-than-RAM support — problems columnar SQL engines solved long ago.</li>
+                <li><strong>It complicates everything.</strong> Custom record managers, manual pointer maintenance, painful sharding and larger-than-RAM support — problems columnar storage engines solved long ago.</li>
             </ul>
             <p class="mt-3 text-gray-600 dark:text-gray-400">Adjacency still matters — as <em>logical</em> locality (CSR-style compressed neighbor columns), not as <em>physical</em> 2006 pointers. Keep the graph semantics; replace the storage religion.</p>
 
-            <h2 class="text-2xl font-bold">CSR (Compressed Sparse Row): the litmus test for a real graph database</h2>
+            <h2 class="text-2xl font-bold mt-10">CSR (Compressed Sparse Row): the litmus test for a real graph database</h2>
             <p class="mt-3 text-gray-600 dark:text-gray-400">If you remember one data structure from this page, make it <strong>CSR — Compressed Sparse Row</strong>. It is the fundamental tech that separates an actual graph database from a document store wearing a graph costume.</p>
-            <p class="mt-3 text-gray-600 dark:text-gray-400">CSR stores adjacency as two tight arrays: an <strong>offset array</strong> (where each node's neighbor list starts) and a <strong>neighbor array</strong> (the destination IDs, packed back-to-back). To find Alice's friends you don't chase pointers across the heap — you slice one contiguous range and stream it through vectorized execution at memory bandwidth, compressed 5–10x. Multi-hop traversals become sequential scans + batched hash joins, parallelized across every core. This is how KuzuDB, LadybugDB, and every serious analytical graph engine do it — and it's borrowed straight from sparse-matrix science and columnar SQL.</p>
+            <p class="mt-3 text-gray-600 dark:text-gray-400">CSR stores adjacency as two tight arrays: an <strong>offset array</strong> (where each node's neighbor list starts) and a <strong>neighbor array</strong> (the destination IDs, packed back-to-back). To find Alice's friends you don't chase pointers across the heap — you slice one contiguous range and stream it through vectorized execution at memory bandwidth, compressed 5–10x. Multi-hop traversals become sequential scans + batched hash joins, parallelized across every core. This is how KuzuDB, LadybugDB, and every serious analytical graph engine do it — and it's borrowed straight from sparse-matrix science and columnar storage.</p>
             <div class="mt-4 p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 font-mono text-sm overflow-x-auto">
                 <div class="text-gray-500 dark:text-gray-500">nodes: &nbsp;&nbsp; Alice(0) &nbsp; Bob(1) &nbsp; Carol(2) &nbsp; Dan(3)</div>
                 <div class="mt-2">offsets&nbsp;&nbsp; = [0, 2, 3, 5, 6] &nbsp;&nbsp;<span class="text-gray-500">— node i's neighbors live in neighbors[offsets[i] : offsets[i+1]]</span></div>
@@ -126,8 +126,8 @@
                 <p class="mt-2 text-sm"><a href="/ladybugdb-vs-arcadedb" class="text-red-600 hover:underline font-medium">Full comparison: LadybugDB vs ArcadeDB →</a></p>
             </div>
 
-            <h2 class="text-2xl font-bold">Graph vs. row-relational: why old JOINs broke down (and new ones don't)</h2>
-            <p class="mt-3 text-gray-600 dark:text-gray-400">The 2006 critique of SQL was really a critique of <em>row-store</em> SQL: 4–6 JOINs over uncompressed rows with a weak planner collapsed on 5-hop fraud rings. Columnar SQL fixed the execution while keeping the declarative model. Modern graph-on-columnar keeps Cypher's pattern syntax — <code>MATCH (a)-[:TRANSFERRED_TO*3..6]-&gt;(a)</code> — but compiles it to the same vectorized joins DuckDB uses to chew through billions of rows. The answer was never to abandon SQL tech. It was to put graphs on better SQL tech.</p>
+            <h2 class="text-2xl font-bold mt-10">Graph vs. row-relational: why old JOINs broke down (and new ones don't)</h2>
+            <p class="mt-3 text-gray-600 dark:text-gray-400">The 2006 critique of SQL was really a critique of <em>row-store</em> SQL: 4–6 JOINs over uncompressed rows with a weak planner collapsed on 5-hop fraud rings. Columnar storage fixed the execution while keeping the declarative model. Modern graph-on-columnar keeps Cypher's pattern syntax — <code>MATCH (a)-[:TRANSFERRED_TO*3..6]-&gt;(a)</code> — but compiles it to the same vectorized joins DuckDB uses to chew through billions of rows. The answer was never to abandon database research. It was to put graphs on better storage tech.</p>
             <div class="mt-4 overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
                 <table class="w-full text-sm">
                     <thead class="bg-gray-100 dark:bg-gray-800 font-semibold"><tr><th class="p-3 text-left">Workload</th><th class="p-3 text-left">Relational (SQL)</th><th class="p-3 text-left">Graph DB</th></tr></thead>
@@ -140,7 +140,7 @@
                 </table>
             </div>
 
-            <h2 class="text-2xl font-bold">Query it with Cypher</h2>
+            <h2 class="text-2xl font-bold mt-10">Query it with Cypher</h2>
             <p class="mt-3 text-gray-600 dark:text-gray-400">Cypher is the declarative language for property graphs. You draw the pattern you want with ASCII art:</p>
             <pre class="cypher mt-4"><code><span class="c">// Who are Alice's friends-of-friends?</span>
 <span class="k">MATCH</span> (a:Person {name: <span class="c">'Alice'</span>})-[:KNOWS]-&gt;(friend)-[:KNOWS]-&gt;(fof)
@@ -153,7 +153,7 @@
 <span class="k">RETURN</span> path, reduce(s=0, r <span class="k">IN</span> relationships(path) | s + r.amount) <span class="k">AS</span> total</code></pre>
             <p class="mt-3 text-sm text-gray-500 dark:text-gray-500">LadybugDB, KuzuDB, and Neo4j all speak Cypher — skills transfer directly. <a class="text-red-600 hover:underline" href="https://docs.ladybugdb.com">Try it in the docs →</a></p>
 
-            <h2 class="text-2xl font-bold">Top use cases</h2>
+            <h2 class="text-2xl font-bold mt-10">Top use cases</h2>
             <div class="mt-4 grid sm:grid-cols-2 gap-4">
                 <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-semibold">🕸️ Fraud & AML rings</h3><p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Multi-hop circular transfers, shared devices/IPs. The classic graph win.</p></div>
                 <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-semibold">🤖 Knowledge graphs + GraphRAG</h3><p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Ground AI agents in verifiable entities & citations. Essential for legal, medical, finance.</p></div>
@@ -161,7 +161,7 @@
                 <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-semibold">🔐 Identity & access control</h3><p class="text-sm text-gray-600 dark:text-gray-400 mt-1">User → role → resource hierarchies with inheritance and delegation paths.</p></div>
             </div>
 
-            <h2 class="text-2xl font-bold">Types of graph databases</h2>
+            <h2 class="text-2xl font-bold mt-10">Types of graph databases</h2>
             <ul class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5">
                 <li><strong>Property graph</strong> (Neo4j, LadybugDB, KuzuDB, HelixDB) — nodes/edges with properties, queried in Cypher. Best for applications.</li>
                 <li><strong>RDF / triple store</strong> — semantic-web standards (SPARQL). Best for ontologies and linked open data.</li>
