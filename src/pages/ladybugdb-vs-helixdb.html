@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LadybugDB vs HelixDB: Embedded Graph Database Comparison (2026) | LadybugDB</title>
+    <meta name="description" content="LadybugDB vs HelixDB compared: architecture (columnar vs row), query language (Cypher vs HelixQL), license (MIT vs AGPL/commercial), performance, MCP + OpenAPI, and which embedded graph DB to pick for agentic AI.">
+    <meta name="keywords" content="ladybugdb vs helixdb, helixdb vs ladybugdb, helixdb alternative, embedded graph database comparison, cypher vs helixql, kuzudb successor">
+    <link rel="canonical" href="https://ladybugdb.com/ladybugdb-vs-helixdb">
+    <meta property="og:title" content="LadybugDB vs HelixDB: Which Embedded Graph DB Wins?">
+    <meta property="og:description" content="Columnar + Cypher + MIT (LadybugDB) vs Rust-native + HelixQL (HelixDB). Full comparison table, benchmarks framing, and migration notes.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ladybugdb.com/ladybugdb-vs-helixdb">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Article","headline":"LadybugDB vs HelixDB","description":"Embedded graph database comparison for agentic AI workloads.","author":{"@type":"Organization","name":"LadybugDB","url":"https://ladybugdb.com"},"publisher":{"@type":"Organization","name":"LadybugDB"},"mainEntityOfPage":"https://ladybugdb.com/ladybugdb-vs-helixdb"}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"What is the difference between LadybugDB and HelixDB?","acceptedAnswer":{"@type":"Answer","text":"LadybugDB is an embedded columnar graph DB speaking Cypher under MIT, positioned as the KuzuDB successor. HelixDB is a Rust-native embedded graph-vector DB with its own HelixQL language and a commercial/AGPL-style offering. LadybugDB optimizes for analytical scans and Cypher portability; HelixDB optimizes for combined graph+vector search in Rust."}},
+      {"@type":"Question","name":"Which query language: Cypher or HelixQL?","acceptedAnswer":{"@type":"Answer","text":"Cypher (LadybugDB) is an ISO-standardizing, widely-known language shared with Neo4j/Kuzu — hiring and migration are easy. HelixQL is HelixDB-specific, more powerful for fused vector+graph queries but with lock-in and a smaller talent pool."}},
+      {"@type":"Question","name":"Which license is safer for regulated industries?","acceptedAnswer":{"@type":"Answer","text":"LadybugDB is MIT — permissive, embeddable, auditable, with enterprise contracts. HelixDB's licensing is commercial/AGPL-flavored; verify redistribution and embedding terms with counsel before shipping in legal/medical/finance products."}},
+      {"@type":"Question","name":"Should I migrate from HelixDB to LadybugDB?","acceptedAnswer":{"@type":"Answer","text":"If you need Cypher portability, columnar analytics, OpenAPI/MCP agent interfaces, and MIT embedding — yes. If your workload is primarily fused vector+graph retrieval inside Rust and you accept HelixQL, HelixDB remains a fit."}}
+    ]}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="llms" href="/llms.txt" type="text/plain">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/tailwind-config.js"></script>
+    <style>html{scroll-behavior:smooth}.gradient-text{background:linear-gradient(135deg,#dc2626 0%,#ef4444 50%,#b91c1c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}pre.cypher{background:#1f2937;color:#f3f4f6;border-radius:.75rem;padding:1rem 1.25rem;overflow-x:auto;font-size:.875rem}pre.cypher .k{color:#f87171}pre.cypher .c{color:#9ca3af}</style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-16">
+            <a href="/" class="flex items-center gap-2 group"><svg class="w-8 h-8 transition-transform group-hover:scale-110" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="110" rx="60" ry="70" fill="#dc2626"/><circle cx="100" cy="50" r="25" fill="#1f2937" class="dark:fill-gray-800"/><line x1="100" y1="50" x2="100" y2="180" stroke="#1f2937" stroke-width="3" class="dark:stroke-gray-800"/><circle cx="70" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="65" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="70" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="130" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="135" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="130" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/></svg><span class="font-bold text-xl tracking-tight">LadybugDB</span></a>
+            <nav class="hidden md:flex items-center gap-5 text-sm font-medium"><a href="/what-is-a-graph-database" class="text-gray-600 dark:text-gray-400 hover:text-red-600">Learn</a><a href="https://docs.ladybugdb.com" class="text-gray-600 dark:text-gray-400 hover:text-red-600">Docs</a><a href="https://blog.ladybugdb.com" class="text-gray-600 dark:text-gray-400 hover:text-red-600">Blog</a><a href="https://github.com/LadybugDB/ladybug" class="text-gray-600 dark:text-gray-400 hover:text-red-600">GitHub</a><button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800" aria-label="Toggle theme"><svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button></nav>
+            <button id="mobileMenuBtn" class="md:hidden p-2" aria-label="Menu"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        </div></div>
+    </header>
+    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-white dark:bg-gray-950 pt-20 px-4"><nav class="flex flex-col gap-4 text-lg font-medium"><a href="/" class="py-2 border-b border-gray-200 dark:border-gray-800">Home</a><a href="/what-is-a-graph-database" class="py-2 border-b border-gray-200 dark:border-gray-800">What is a Graph DB?</a><a href="/what-is-kuzudb" class="py-2 border-b border-gray-200 dark:border-gray-800">What is KuzuDB?</a><a href="/ladybugdb-vs-helixdb" class="py-2 border-b border-gray-200 dark:border-gray-800">LadybugDB vs HelixDB</a><a href="/ladybugdb-vs-neo4j" class="py-2 border-b border-gray-200 dark:border-gray-800">LadybugDB vs Neo4j</a><a href="/ladybugdb-vs-arcadedb" class="py-2 border-b border-gray-200 dark:border-gray-800">LadybugDB vs ArcadeDB</a><a href="https://docs.ladybugdb.com" class="py-2 border-b border-gray-200 dark:border-gray-800">Docs</a></nav></div>
+
+    <main class="pt-28 pb-16"><div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-sm text-gray-500 mb-4"><a href="/" class="hover:text-red-600">Home</a> / Compare / LadybugDB vs HelixDB</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm font-medium mb-4">Comparison · Updated 2026</div>
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">LadybugDB <span class="gradient-text">vs HelixDB</span></h1>
+        <p class="mt-4 text-xl text-gray-600 dark:text-gray-400">Two modern embedded graph databases with opposite bets: <strong>LadybugDB = columnar + Cypher + MIT</strong> (the KuzuDB successor). <strong>HelixDB = Rust-native graph+vector + HelixQL.</strong> Here's how to choose.</p>
+
+        <div class="mt-6 p-1 rounded-2xl bg-gradient-to-r from-red-600 to-red-800"><div class="rounded-2xl bg-white dark:bg-gray-900 p-6">
+            <h2 class="font-bold text-lg">TL;DR verdict</h2>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">Pick <strong>LadybugDB</strong> if you want Cypher portability, columnar analytics, MIT embedding, and agent-ready OpenAPI/MCP. Pick <strong>HelixDB</strong> if you live in Rust and want fused vector+graph retrieval in one engine with its custom HelixQL. For regulated-industry agents (legal/medical/finance), LadybugDB's standards + permissive license usually win.</p>
+        </div></div>
+
+        <h2 class="text-2xl font-bold mt-10">Head-to-head comparison</h2>
+        <div class="mt-4 overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800"><table class="w-full text-sm">
+            <thead class="bg-gray-100 dark:bg-gray-800 font-semibold"><tr><th class="p-3 text-left">Dimension</th><th class="p-3 text-left">🐞 LadybugDB</th><th class="p-3 text-left">🌀 HelixDB</th></tr></thead>
+            <tbody class="bg-white dark:bg-gray-900">
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Positioning</td><td class="p-3">DuckDB for graphs; KuzuDB successor</td><td class="p-3">Rust graph-vector DB for RAG</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Storage</td><td class="p-3 font-semibold text-red-600">Columnar, compressed, vectorized — in-memory, disk, or object storage (CSR on object storage via Icebug / GraphLake)</td><td class="p-3">Row-oriented / custom (Rust); in-memory, disk, or object storage</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Query language</td><td class="p-3 font-semibold text-red-600">Cypher (portable, standardizing)</td><td class="p-3">HelixQL (custom, graph+vector fused)</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Vector + full-text search</td><td class="p-3 font-semibold text-red-600">Native vector & full-text indices alongside the property graph</td><td class="p-3">Native hybrid vector+graph+full-text</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Range scans</td><td class="p-3 font-semibold text-red-600">Yes — ART indexes serve exact + range filters (gt/gte/lt/lte/between) with ordered scans</td><td class="p-3">Yes — range indexes over timestamps etc.</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">License</td><td class="p-3 font-semibold text-red-600">MIT (permissive)</td><td class="p-3">Commercial / AGPL-flavored — check terms</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Deployment</td><td class="p-3 font-semibold text-red-600">Embedded zero-deps, server mode (Bolt), ADBC columnar interface; OpenAPI + MCP server</td><td class="p-3">Embedded Rust; local server; managed cloud</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">SDKs</td><td class="p-3">Python, JS/TS (npm), Rust + MCP (PyPI)</td><td class="p-3">Rust-first + JS/Python clients</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Analytics (scans/aggs)</td><td class="p-3 font-semibold text-red-600">Excellent (columnar)</td><td class="p-3">Good (not columnar-specialized)</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Talent pool</td><td class="p-3 font-semibold text-red-600">Large (Cypher everywhere)</td><td class="p-3">Small (HelixQL-specific)</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Lineage</td><td class="p-3">VLDB research + 10+ enterprise predecessor</td><td class="p-3">Newer startup project</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Graph algorithms</td><td class="p-3 font-semibold text-red-600">220+ via Icebug (columnar NetworKit fork) on the same CSR data</td><td class="p-3">Thin built-in set; app-side composition</td></tr>
+            </tbody></table></div>
+
+        <h2 class="text-2xl font-bold mt-10">Setting the record straight</h2>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">A competitor comparison page claims LadybugDB is "embedded-only, disk-only, no range scans, and wrong for RAG because RAG is OLTP." Every clause is false. The facts:</p>
+        <div class="mt-4 space-y-4">
+            <div class="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-bold">1. Storage: in-memory, disk, <em>and</em> object storage — including CSR on object storage</h3><p class="mt-2 text-sm text-gray-600 dark:text-gray-400">LadybugDB traverses CSR whether it lives in native storage, in Parquet files, or in Arrow tables. Relationships can be mounted directly from object storage (S3-compatible) via the open Icebug format (<code>icebug-disk</code> as Parquet CSR, <code>icebug-memory</code> as Arrow CSR for zero-copy) — no import required. The GraphLake vision pairs Iceberg tables with icebug-disk graphs. Storage mode is a workload choice, not a single-process ceiling.</p></div>
+            <div class="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-bold">2. Topology: embedded, server (Bolt), and ADBC</h3><p class="mt-2 text-sm text-gray-600 dark:text-gray-400">LadybugDB runs embedded in-process (zero dependencies, plus WebAssembly for the browser), as a server speaking Bolt, and through ADBC — the Arrow-native columnar interface that hands results to data frames and lakehouse tools without row-by-row conversion. "Embedded by design" never meant "embedded only."</p></div>
+            <div class="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-bold">3. Range scans: yes, via ART indexes</h3><p class="mt-2 text-sm text-gray-600 dark:text-gray-400">LadybugDB's Adaptive Radix Tree (ART) indexes — the same design DuckDB uses for every PRIMARY KEY — keep keys in sorted order, so one index serves exact lookups <em>and</em> range filters with ordered scans in either direction. "What did this agent see between Tuesday and Thursday" is an indexed range scan, not a post-filter.</p></div>
+            <div class="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><h3 class="font-bold">4. RAG is OLAP, not OLTP — and LadybugDB pairs with your OLTP store</h3><p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Retrieval over a knowledge graph — multi-hop traversals, vector similarity, aggregations over large candidate sets — is analytical (OLAP) work: scan-heavy, read-mostly, exactly what columnar vectorized engines are built for. High-concurrency transactional writes (OLTP) belong in SQLite or Postgres — and LadybugDB works alongside them just fine, as the analytical brain next to your system of record. Framing RAG as "transactional agent traffic" that needs an OLTP graph engine inverts the workload: agents read far more than they write.</p></div>
+        </div>
+
+        <h2 class="text-2xl font-bold mt-10">Language check: Cypher vs HelixQL</h2>
+        <pre class="cypher mt-4"><code><span class="c">// LadybugDB — standard Cypher, works on Neo4j/Kuzu too</span>
+<span class="k">MATCH</span> (u:User {id: $uid})-[:BOUGHT]-&gt;(p:Product)&lt;-[:BOUGHT]-(other)-[:BOUGHT]-&gt;(rec)
+<span class="k">WHERE</span> <span class="k">NOT</span> (u)-[:BOUGHT]-&gt;(rec)
+<span class="k">RETURN</span> rec.name, count(*) <span class="k">AS</span> score <span class="k">ORDER BY</span> score <span class="k">DESC LIMIT</span> 10;
+
+<span class="c">// HelixDB — HelixQL fuses vector + traversal (proprietary syntax)</span>
+<span class="c">// v:search(embedding) + traversal in one query — powerful but non-portable</span></code></pre>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">If you ever need to hire, audit, or migrate, Cypher's portability is a superpower. Every Cypher engineer is productive on LadybugDB day one.</p>
+
+        <h2 class="text-2xl font-bold mt-10">When HelixDB is the better fit</h2>
+        <ul class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5">
+            <li>Your workload is <strong>fused vector + graph retrieval</strong> (hybrid RAG) and you want it in one Rust engine.</li>
+            <li>Your stack is <strong>Rust-first</strong> and you accept a custom query language.</li>
+            <li>You don't need columnar analytics or MIT redistribution guarantees.</li>
+        </ul>
+        <h2 class="text-2xl font-bold mt-8">When LadybugDB wins</h2>
+        <ul class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5">
+            <li>Agentic AI in <strong>regulated industries</strong> needing auditable, permissively-licensed infra.</li>
+            <li><strong>Analytical traversals + aggregations</strong> over large graphs (fraud, recommendations, knowledge graphs).</li>
+            <li>You want <strong>Kuzu/Cypher compatibility</strong>, OpenAPI + MCP for agents, and npm/PyPI SDKs.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-10">Ecosystem edge: Icebug, icebug-format, and NetworkX go columnar</h2>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">A new engine means a thin algorithm library and a bet that app-side glue covers the gap. LadybugDB inherits decades of graph-algorithm research instead:</p>
+        <ul class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5">
+            <li><strong>Icebug:</strong> a columnar fork of NetworKit with <strong>220+ graph algorithms</strong> running directly on LadybugDB's CSR data — centrality, communities, paths, embeddings, no export step.</li>
+            <li><strong>icebug-format:</strong> open Parquet-with-CSR storage — graphs on object storage and in the lakehouse (GraphLake), interoperable with the whole Parquet/Arrow world.</li>
+            <li><strong>NetworkX goes columnar too:</strong> via the <code>nx-arrow</code> and <code>nx-ladybug</code> backends, the same columnar tech reaches Python's most popular graph library — prototype in NetworkX, productionize on LadybugDB.</li>
+        </ul>
+
+        <div class="mt-10 p-8 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white text-center">
+            <h2 class="text-2xl font-bold">Try the Cypher-native, MIT-licensed option.</h2>
+            <p class="mt-2 text-red-100">One-command install. Migrate from Kuzu, Neo4j, or HelixDB in minutes.</p>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center"><a href="https://docs.ladybugdb.com" class="px-6 py-3 rounded-lg bg-white text-red-700 font-bold hover:bg-gray-100">Get Started</a><a href="https://github.com/LadybugDB/ladybug" class="px-6 py-3 rounded-lg border-2 border-white font-bold hover:bg-white/10">Star on GitHub</a></div>
+        </div>
+        <div class="mt-10 text-sm"><h2 class="font-bold text-lg">Keep comparing</h2><div class="mt-3 grid sm:grid-cols-2 gap-3"><a href="/ladybugdb-vs-neo4j" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs Neo4j →</a><a href="/ladybugdb-vs-arcadedb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs ArcadeDB →</a><a href="/what-is-kuzudb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">What is KuzuDB? →</a><a href="/what-is-a-graph-database" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">What is a Graph DB? →</a></div></div>
+    </div></main>
+    <footer class="py-12 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="grid md:grid-cols-4 gap-8 text-sm"><div><div class="font-bold text-lg mb-2">LadybugDB</div><p class="text-gray-600 dark:text-gray-400">DuckDB for graphs — the KuzuDB successor.</p></div><div><div class="font-semibold mb-2">Learn</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="/what-is-a-graph-database" class="hover:text-red-600">What is a Graph DB?</a></li><li><a href="/what-is-kuzudb" class="hover:text-red-600">What is KuzuDB?</a></li></ul></div><div><div class="font-semibold mb-2">Compare</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="/ladybugdb-vs-helixdb" class="hover:text-red-600">vs HelixDB</a></li><li><a href="/ladybugdb-vs-neo4j" class="hover:text-red-600">vs Neo4j</a></li><li><a href="/ladybugdb-vs-arcadedb" class="hover:text-red-600">vs ArcadeDB</a></li></ul></div><div><div class="font-semibold mb-2">Resources</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="https://docs.ladybugdb.com" class="hover:text-red-600">Docs</a></li><li><a href="https://github.com/LadybugDB/ladybug" class="hover:text-red-600">GitHub</a></li><li><a href="https://blog.ladybugdb.com" class="hover:text-red-600">Blog</a></li></ul></div></div><div class="mt-8 pt-8 border-t border-gray-300 dark:border-gray-800 text-center text-xs text-gray-500">&copy; 2026 LadybugDB. Proudly sponsored by <a href="https://ladybugmem.ai" class="text-red-600 hover:underline">Ladybug Memory</a>.</div></div></footer>
+    <script>const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;function toggleTheme(){html.classList.contains('dark')?html.classList.remove('dark'):html.classList.add('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light')}themeToggle&&themeToggle.addEventListener('click',toggleTheme);if(localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches))html.classList.add('dark');const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileMenu=document.getElementById('mobileMenu');mobileMenuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));</script>
+</body>
+</html>

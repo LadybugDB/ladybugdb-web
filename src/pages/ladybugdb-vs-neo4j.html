@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LadybugDB vs Neo4j: Embedded vs Server Graph Database (2026) | LadybugDB</title>
+    <meta name="description" content="LadybugDB vs Neo4j compared: embedded columnar MIT vs server GPL/commercial, Cypher compatibility, cost, ops, analytics performance, and when to migrate from Neo4j to LadybugDB for agentic AI.">
+    <meta name="keywords" content="ladybugdb vs neo4j, neo4j vs ladybugdb, neo4j alternative, embedded vs server graph database, neo4j pricing alternative, cypher graph database, kuzudb successor">
+    <link rel="canonical" href="https://ladybugdb.com/ladybugdb-vs-neo4j">
+    <meta property="og:title" content="LadybugDB vs Neo4j: Do You Still Need a Graph Server?">
+    <meta property="og:description" content="Neo4j pioneered property graphs — but servers, GPL/commercial licensing, and per-seat costs hurt agents at the edge. Compare ops, license, and analytics.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ladybugdb.com/ladybugdb-vs-neo4j">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Article","headline":"LadybugDB vs Neo4j","description":"Embedded vs server graph database comparison.","author":{"@type":"Organization","name":"LadybugDB","url":"https://ladybugdb.com"},"publisher":{"@type":"Organization","name":"LadybugDB"},"mainEntityOfPage":"https://ladybugdb.com/ladybugdb-vs-neo4j"}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"What is the main difference between LadybugDB and Neo4j?","acceptedAnswer":{"@type":"Answer","text":"Neo4j is a client-server graph database (row-oriented, GPL/commercial dual-license) you operate as a cluster. LadybugDB is an embedded, columnar, MIT-licensed engine that runs in-process like DuckDB — zero ops, file on disk, ideal for edge agents and serverless."}},
+      {"@type":"Question","name":"Is LadybugDB Cypher-compatible with Neo4j?","acceptedAnswer":{"@type":"Answer","text":"Yes. Both speak Cypher (openCypher). Most MATCH/WHERE/RETURN workloads, aggregations, and variable-length path queries port directly; check the docs for function-level differences."}},
+      {"@type":"Question","name":"Is LadybugDB cheaper than Neo4j?","acceptedAnswer":{"@type":"Answer","text":"LadybugDB is MIT open source — free to embed and distribute, with optional enterprise support. Neo4j Community is GPL-limited and Enterprise/Aura carry license or consumption costs that scale with cluster size."}},
+      {"@type":"Question","name":"When should I stay on Neo4j?","acceptedAnswer":{"@type":"Answer","text":"Stay on Neo4j if you need multi-node clustering, Fabric sharding, mature Graph Data Science (GDS) library, or deep Bloom/enterprise tooling today. Move to LadybugDB for embedded, edge, per-tenant, or cost-sensitive analytical workloads."}}
+    ]}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="llms" href="/llms.txt" type="text/plain">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/tailwind-config.js"></script>
+    <style>html{scroll-behavior:smooth}.gradient-text{background:linear-gradient(135deg,#dc2626 0%,#ef4444 50%,#b91c1c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}pre.cypher{background:#1f2937;color:#f3f4f6;border-radius:.75rem;padding:1rem 1.25rem;overflow-x:auto;font-size:.875rem}pre.cypher .k{color:#f87171}pre.cypher .c{color:#9ca3af}</style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-16">
+            <a href="/" class="flex items-center gap-2 group"><svg class="w-8 h-8 transition-transform group-hover:scale-110" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="110" rx="60" ry="70" fill="#dc2626"/><circle cx="100" cy="50" r="25" fill="#1f2937" class="dark:fill-gray-800"/><line x1="100" y1="50" x2="100" y2="180" stroke="#1f2937" stroke-width="3" class="dark:stroke-gray-800"/><circle cx="70" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="65" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="70" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="130" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="135" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="130" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/></svg><span class="font-bold text-xl tracking-tight">LadybugDB</span></a>
+            <nav class="hidden md:flex items-center gap-5 text-sm font-medium"><a href="/what-is-a-graph-database" class="text-gray-600 dark:text-gray-400 hover:text-red-600">Learn</a><a href="https://docs.ladybugdb.com" class="text-gray-600 dark:text-gray-400 hover:text-red-600">Docs</a><a href="https://blog.ladybugdb.com" class="text-gray-600 dark:text-gray-400 hover:text-red-600">Blog</a><a href="https://github.com/LadybugDB/ladybug" class="text-gray-600 dark:text-gray-400 hover:text-red-600">GitHub</a><button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800" aria-label="Toggle theme"><svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button></nav>
+            <button id="mobileMenuBtn" class="md:hidden p-2" aria-label="Menu"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        </div></div>
+    </header>
+    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-white dark:bg-gray-950 pt-20 px-4"><nav class="flex flex-col gap-4 text-lg font-medium"><a href="/" class="py-2 border-b border-gray-200 dark:border-gray-800">Home</a><a href="/what-is-a-graph-database" class="py-2 border-b border-gray-200 dark:border-gray-800">What is a Graph DB?</a><a href="/what-is-kuzudb" class="py-2 border-b border-gray-200 dark:border-gray-800">What is KuzuDB?</a><a href="/ladybugdb-vs-helixdb" class="py-2 border-b border-gray-200 dark:border-gray-800">LadybugDB vs HelixDB</a><a href="/ladybugdb-vs-neo4j" class="py-2 border-b border-gray-200 dark:border-gray-800">LadybugDB vs Neo4j</a><a href="/ladybugdb-vs-arcadedb" class="py-2 border-b border-gray-200 dark:border-gray-800">LadybugDB vs ArcadeDB</a><a href="https://docs.ladybugdb.com" class="py-2 border-b border-gray-200 dark:border-gray-800">Docs</a></nav></div>
+
+    <main class="pt-28 pb-16"><div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-sm text-gray-500 mb-4"><a href="/" class="hover:text-red-600">Home</a> / Compare / LadybugDB vs Neo4j</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm font-medium mb-4">Comparison · Updated 2026</div>
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">LadybugDB <span class="gradient-text">vs Neo4j</span></h1>
+        <p class="mt-4 text-xl text-gray-600 dark:text-gray-400">Neo4j invented the property-graph market. But if you're shipping <strong>agents, edge deployments, or per-tenant graphs</strong>, do you still want a server cluster with GPL/commercial licensing? <strong>LadybugDB is DuckDB for graphs:</strong> embedded, columnar, Cypher-compatible, MIT.</p>
+
+        <div class="mt-6 p-1 rounded-2xl bg-gradient-to-r from-red-600 to-red-800"><div class="rounded-2xl bg-white dark:bg-gray-900 p-6">
+            <h2 class="font-bold text-lg">TL;DR verdict</h2>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">Keep <strong>Neo4j</strong> for large shared clusters, GDS algorithms, and Bloom tooling. Choose <strong>LadybugDB</strong> for embedded/serverless, columnar analytics, MIT embedding, zero-ops cost, and agent-native OpenAPI/MCP. Most Cypher ports directly.</p>
+        </div></div>
+
+        <h2 class="text-2xl font-bold mt-10">Head-to-head comparison</h2>
+        <div class="mt-4 overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800"><table class="w-full text-sm">
+            <thead class="bg-gray-100 dark:bg-gray-800 font-semibold"><tr><th class="p-3 text-left">Dimension</th><th class="p-3 text-left">🐞 LadybugDB</th><th class="p-3 text-left">🟩 Neo4j</th></tr></thead>
+            <tbody class="bg-white dark:bg-gray-900">
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Architecture</td><td class="p-3 font-semibold text-red-600">Embedded, in-process (DuckDB-style)</td><td class="p-3">Client-server cluster / Aura cloud</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Storage</td><td class="p-3 font-semibold text-red-600">Columnar, compressed, vectorized</td><td class="p-3">Row-oriented transactional store (JVM)</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Runtime</td><td class="p-3 font-semibold text-red-600">Native C++ — zero-deps binary, no GC, predictable latency</td><td class="p-3">JVM (Java) — heap sizing, GC pauses, ~GB footprint before your data</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Query language</td><td class="p-3">Cypher ✓ (portable)</td><td class="p-3">Cypher + GDS procedures ✓</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">License</td><td class="p-3 font-semibold text-red-600">MIT (embed & distribute freely)</td><td class="p-3">GPL (Community) / Commercial (Enterprise/Aura)</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Ops</td><td class="p-3 font-semibold text-red-600">Zero — a file on disk</td><td class="p-3">Cluster ops, backups, sizing, upgrades</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Cost model</td><td class="p-3 font-semibold text-red-600">Free + optional support</td><td class="p-3">License / Aura consumption</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Analytics scans</td><td class="p-3 font-semibold text-red-600">Excellent (columnar)</td><td class="p-3">Good; GDS for algorithms</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Scale-out</td><td class="p-3">Scale-up per instance (edge/tenant)</td><td class="p-3 font-semibold text-emerald-600">Clustering, Fabric, Aura</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Agent interface</td><td class="p-3 font-semibold text-red-600">OpenAPI + MCP server + SDKs</td><td class="p-3">Bolt drivers + LangChain integrations</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Graph algorithms</td><td class="p-3 font-semibold text-red-600">220+ via Icebug (columnar NetworKit fork) on the same CSR data, zero-copy</td><td class="p-3">GDS library (mature, server-side, licensed)</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3 font-medium">Best for</td><td class="p-3">Agents, edge, per-tenant, regulated embed</td><td class="p-3">Shared enterprise graph platform</td></tr>
+            </tbody></table></div>
+
+        <h2 class="text-2xl font-bold mt-10">Cost & license: the real decider</h2>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">Neo4j Community's GPL restricts commercial embedding; production teams land on Enterprise or Aura — per-core or consumption billing that grows with every tenant. LadybugDB's <strong>MIT license</strong> lets you ship the engine <em>inside</em> your product (legal-tech, medical, finance) with no per-seat meter, plus optional enterprise support when you need an SLA.</p>
+
+        <h2 class="text-2xl font-bold mt-10">Benchmarks: Ladybug wins 26 of 30 queries vs Neo4j</h2>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">Independent evidence — not vendor numbers. <a class="text-red-600 hover:underline font-medium" href="https://thedataquarry.com/blog/celebrating-one-year-of-ladybug/">Prashanth Rao (ex-Kuzu team) at The Data Quarry, “Celebrating one year of LadybugDB” (Oct 10, 2026)</a>, maintains an unofficial 30-query benchmark on the LDBC Social Network Benchmark (SF1: ~3.2M nodes, ~17.3M relationships), comparing <strong>LadybugDB 0.21.1 vs Kuzu 0.11.3 vs Neo4j 2025.12.1 Community</strong>. Result:</p>
+        <div class="mt-4 grid sm:grid-cols-3 gap-4 text-center">
+            <div class="p-5 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40"><div class="text-3xl font-extrabold gradient-text">26 / 30</div><div class="text-sm text-gray-600 dark:text-gray-400 mt-1">queries where Ladybug beats Neo4j</div></div>
+            <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><div class="text-3xl font-extrabold">19 / 30</div><div class="text-sm text-gray-600 dark:text-gray-400 mt-1">queries where Ladybug is fastest of all three</div></div>
+            <div class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"><div class="text-3xl font-extrabold">23 / 30</div><div class="text-sm text-gray-600 dark:text-gray-400 mt-1">queries where Ladybug beats its predecessor Kuzu</div></div>
+        </div>
+        <div class="mt-4 overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800"><table class="w-full text-sm">
+            <thead class="bg-gray-100 dark:bg-gray-800 font-semibold"><tr><th class="p-3 text-left">Standout query</th><th class="p-3 text-left">Neo4j</th><th class="p-3 text-left">LadybugDB</th><th class="p-3 text-left">Speedup</th></tr></thead>
+            <tbody class="bg-white dark:bg-gray-900">
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3">Q20 (deep traversal)</td><td class="p-3">393.3 ms</td><td class="p-3">14.1 ms</td><td class="p-3 font-bold text-red-600">27.9× faster</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3">Q30 (heavy aggregation)</td><td class="p-3">1055.2 ms</td><td class="p-3">88.7 ms</td><td class="p-3 font-bold text-red-600">11.9× faster</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3">Q4</td><td class="p-3">3.14 ms</td><td class="p-3">0.38 ms</td><td class="p-3 font-bold text-red-600">8.2× faster</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3">Q2</td><td class="p-3">5.08 ms</td><td class="p-3">1.18 ms</td><td class="p-3 font-bold text-red-600">4.3× faster</td></tr>
+            <tr class="border-t border-gray-200 dark:border-gray-800"><td class="p-3">Q23</td><td class="p-3">3.08 ms</td><td class="p-3">0.73 ms</td><td class="p-3 font-bold text-red-600">4.2× faster</td></tr>
+            </tbody></table></div>
+        <p class="mt-3 text-gray-600 dark:text-gray-400 text-sm">Why it wins: CSR-native execution (counting from CSR metadata, <code>COUNT_EXTEND_CHAIN</code> without materializing paths — a 7-hop chain counting ~179M paths dropped from 5.6s to 0.11s), extend-chains instead of hash-joining full relationship scans, fan-out-aware planning, and relationship semi-masks. Neo4j stays ahead on a handful of queries (notably Q7) — but the overall picture is decisive. Full table + methodology: <a class="text-red-600 hover:underline font-medium" href="https://thedataquarry.com/blog/celebrating-one-year-of-ladybug/">thedataquarry.com/blog/celebrating-one-year-of-ladybug →</a></p>
+
+        <h2 class="text-2xl font-bold mt-10">The JVM tax: why Java was the wrong foundation</h2>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">Neo4j runs on the JVM — and you pay for it on every deployment. Gigabytes of heap before storing a single node. Garbage-collection pauses injecting tail-latency spikes into traversals that should be microseconds. Slow cold starts, mandatory heap tuning (<code>-Xmx</code> roulette), and a runtime that fights containers, edge devices, and serverless instead of disappearing into them. Object headers and pointer-heavy record layouts bloat every node and edge versus a packed columnar layout.</p>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">LadybugDB is <strong>native C++</strong>: a zero-dependency binary that embeds in-process with deterministic latency, minimal footprint, and no runtime to babysit — the DuckDB playbook applied to graphs. Compiled languages (C++ here, Rust elsewhere) hold a structural advantage in embedded environments: predictable performance, tiny binaries, and memory you spend on <em>your graph</em>, not on the runtime's bookkeeping. The JVM made sense for enterprise middleware in 2007. It is overhead you should no longer accept in a database.</p>
+
+        <h2 class="text-2xl font-bold mt-10">Ecosystem edge: Icebug, icebug-format, and NetworkX go columnar</h2>
+        <p class="mt-3 text-gray-600 dark:text-gray-400">Neo4j's GDS library is mature — but it lives behind the cluster wall, on a row store, under a commercial license. LadybugDB answers with an open ecosystem bet:</p>
+        <ul class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5">
+            <li><strong>Icebug:</strong> a columnar fork of NetworKit shipping <strong>220+ graph algorithms</strong> (centrality, community detection, paths, embeddings) that run directly on LadybugDB's CSR data — no export, no second engine, no license meter.</li>
+            <li><strong>icebug-format:</strong> open Parquet-with-CSR storage. Your graph lives in the lakehouse (Iceberg tables + icebug-disk graphs = GraphLake) and stays readable by every Parquet/Arrow tool. No proprietary store-in.</li>
+            <li><strong>NetworkX goes columnar too:</strong> the same ideas are reaching Python's most popular graph library via the <code>nx-arrow</code> and <code>nx-ladybug</code> backends — larger-than-RAM, columnar-backed graphs in plain NetworkX code. Learn once, scale everywhere.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-10">Migration: Neo4j → LadybugDB</h2>
+        <ol class="mt-3 space-y-2 text-gray-600 dark:text-gray-400 list-decimal pl-5">
+            <li><strong>Export:</strong> <code>apoc.export.csv.*</code> or Parquet dumps of nodes + edges.</li>
+            <li><strong>Re-create schema:</strong> <code>CREATE NODE TABLE Person(name STRING, PRIMARY KEY(id))</code> — then <code>COPY ... FROM</code>.</li>
+            <li><strong>Port Cypher:</strong> most <code>MATCH/WHERE/RETURN</code>, aggregations, and variable-length paths work as-is. Replace APOC/GDS-specific procedures with app code or LadybugDB equivalents.</li>
+            <li><strong>Repoint drivers:</strong> swap Bolt for the <code>ladybugdb</code> Python/JS package or OpenAPI; agents can use the <strong>MCP server</strong> directly.</li>
+        </ol>
+        <pre class="cypher mt-4"><code><span class="c">// Runs on both Neo4j and LadybugDB</span>
+<span class="k">MATCH</span> (p:Person)-[:TRANSFERRED_TO*2..5]-&gt;(q:Person)
+<span class="k">WHERE</span> p.riskScore &gt; 0.8
+<span class="k">RETURN</span> p.name, q.name, length(shortestPath((p)-[*]-&gt;(q))) <span class="k">AS</span> hops
+<span class="k">LIMIT</span> 100</code></pre>
+
+        <div class="mt-10 p-8 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white text-center">
+            <h2 class="text-2xl font-bold">Ditch the cluster. Keep the Cypher.</h2>
+            <p class="mt-2 text-red-100">Embedded, columnar, MIT. Install LadybugDB in one command.</p>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center"><a href="https://docs.ladybugdb.com" class="px-6 py-3 rounded-lg bg-white text-red-700 font-bold hover:bg-gray-100">Migrate from Neo4j</a><a href="https://github.com/LadybugDB/ladybug" class="px-6 py-3 rounded-lg border-2 border-white font-bold hover:bg-white/10">Star on GitHub</a></div>
+        </div>
+        <div class="mt-10 text-sm"><h2 class="font-bold text-lg">Keep comparing</h2><div class="mt-3 grid sm:grid-cols-2 gap-3"><a href="/ladybugdb-vs-helixdb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs HelixDB →</a><a href="/ladybugdb-vs-arcadedb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs ArcadeDB →</a><a href="/what-is-kuzudb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">What is KuzuDB? →</a><a href="/what-is-a-graph-database" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">What is a Graph DB? →</a></div></div>
+    </div></main>
+    <footer class="py-12 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="grid md:grid-cols-4 gap-8 text-sm"><div><div class="font-bold text-lg mb-2">LadybugDB</div><p class="text-gray-600 dark:text-gray-400">DuckDB for graphs — the KuzuDB successor.</p></div><div><div class="font-semibold mb-2">Learn</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="/what-is-a-graph-database" class="hover:text-red-600">What is a Graph DB?</a></li><li><a href="/what-is-kuzudb" class="hover:text-red-600">What is KuzuDB?</a></li></ul></div><div><div class="font-semibold mb-2">Compare</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="/ladybugdb-vs-helixdb" class="hover:text-red-600">vs HelixDB</a></li><li><a href="/ladybugdb-vs-neo4j" class="hover:text-red-600">vs Neo4j</a></li><li><a href="/ladybugdb-vs-arcadedb" class="hover:text-red-600">vs ArcadeDB</a></li></ul></div><div><div class="font-semibold mb-2">Resources</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="https://docs.ladybugdb.com" class="hover:text-red-600">Docs</a></li><li><a href="https://github.com/LadybugDB/ladybug" class="hover:text-red-600">GitHub</a></li><li><a href="https://blog.ladybugdb.com" class="hover:text-red-600">Blog</a></li></ul></div></div><div class="mt-8 pt-8 border-t border-gray-300 dark:border-gray-800 text-center text-xs text-gray-500">&copy; 2026 LadybugDB. Proudly sponsored by <a href="https://ladybugmem.ai" class="text-red-600 hover:underline">Ladybug Memory</a>.</div></div></footer>
+    <script>const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;function toggleTheme(){html.classList.contains('dark')?html.classList.remove('dark'):html.classList.add('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light')}themeToggle&&themeToggle.addEventListener('click',toggleTheme);if(localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches))html.classList.add('dark');const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileMenu=document.getElementById('mobileMenu');mobileMenuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));</script>
+</body>
+</html>
