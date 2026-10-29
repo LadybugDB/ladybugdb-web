@@ -12,32 +12,40 @@
     <meta property="og:url" content="https://ladybugdb.com/comparisons">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="llms" href="/llms.txt" type="text/plain">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/tailwind-config.js"></script>
-    <style>html{scroll-behavior:smooth}.gradient-text{background:linear-gradient(135deg,#dc2626 0%,#ef4444 50%,#b91c1c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.card-hover:hover{transform:translateY(-4px)}</style>
+    <style>.mono{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace}html{scroll-behavior:smooth}.gradient-text{background:linear-gradient(135deg,#dc2626 0%,#ef4444 50%,#b91c1c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.card-hover:hover{transform:translateY(-4px)}</style>
 </head>
 <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-16">
-            <a href="/" class="flex items-center gap-2 group"><svg class="w-8 h-8 transition-transform group-hover:scale-110" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="110" rx="60" ry="70" fill="#dc2626"/><circle cx="100" cy="50" r="25" fill="#1f2937" class="dark:fill-gray-800"/><line x1="100" y1="50" x2="100" y2="180" stroke="#1f2937" stroke-width="3" class="dark:stroke-gray-800"/><circle cx="70" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="65" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="70" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="130" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="135" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/><circle cx="130" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/></svg><span class="font-bold text-xl tracking-tight">LadybugDB</span></a>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-                <a href="https://docs.ladybugdb.com" class="text-gray-600 dark:text-gray-400 hover:text-red-600 transition-colors">Docs</a>
-                <span class="text-gray-300 dark:text-gray-700">/</span>
-                <a href="https://blog.ladybugdb.com" class="text-gray-600 dark:text-gray-400 hover:text-red-600 transition-colors">Blog</a>
-                <span class="text-gray-300 dark:text-gray-700">/</span>
-                <a href="/comparisons" class="text-red-600 dark:text-red-400">Comparisons</a>
-                <span class="text-gray-300 dark:text-gray-700">/</span>
-                <a href="https://github.com/LadybugDB/ladybug" class="text-gray-600 dark:text-gray-400 hover:text-red-600 transition-colors">GitHub</a>
-                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800" aria-label="Toggle theme"><svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
+    <header class="border-b border-stone-200 dark:border-stone-800">
+        <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+                <svg class="w-8 h-8" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="100" cy="110" rx="60" ry="70" fill="#b91c1c"/>
+                    <circle cx="100" cy="50" r="25" fill="#1c1917"/>
+                    <circle cx="70" cy="80" r="10" fill="#1c1917"/>
+                    <circle cx="65" cy="110" r="12" fill="#1c1917"/>
+                    <circle cx="70" cy="145" r="10" fill="#1c1917"/>
+                    <circle cx="130" cy="80" r="10" fill="#1c1917"/>
+                    <circle cx="135" cy="110" r="12" fill="#1c1917"/>
+                    <circle cx="130" cy="145" r="10" fill="#1c1917"/>
+                </svg>
+                <span class="mono font-semibold text-[15px] tracking-tight text-stone-900 dark:text-stone-200">LadybugDB</span>
+                <span class="mono text-[11px] px-1.5 py-0.5 rounded border border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400">v0.22.1</span>
+            </a>
+            <nav class="flex items-center gap-1 mono text-[13px] text-stone-500 dark:text-stone-400">
+                <a href="https://docs.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">docs</a><span class="select-none">/</span>
+                <a href="https://blog.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">blog</a><span class="select-none hidden sm:inline">/</span>
+                <a href="/comparisons" class="px-1.5 hover:text-red-700 dark:hover:text-red-400 hidden sm:inline">comparisons</a><span class="select-none">/</span>
+                <a href="https://github.com/LadybugDB/ladybug" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">github</a>
+                <button id="themeToggle" class="ml-2 px-1.5 hover:text-red-700 dark:hover:text-red-400" aria-label="Toggle theme">◐</button>
             </nav>
-            <button id="mobileMenuBtn" class="md:hidden p-2" aria-label="Menu"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-        </div></div>
+        </div>
     </header>
-    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-white dark:bg-gray-950 pt-20 px-4"><nav class="flex flex-col gap-4 text-lg font-medium"><a href="https://docs.ladybugdb.com" class="py-2 border-b border-gray-200 dark:border-gray-800">Docs</a><a href="https://blog.ladybugdb.com" class="py-2 border-b border-gray-200 dark:border-gray-800">Blog</a><a href="/comparisons" class="py-2 border-b border-gray-200 dark:border-gray-800">Comparisons</a><a href="https://github.com/LadybugDB/ladybug" class="py-2 border-b border-gray-200 dark:border-gray-800">GitHub</a></nav></div>
 
-    <main class="pt-28 pb-16">
+    <main class="pt-12 pb-16">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-sm text-gray-500 mb-4"><a href="/" class="hover:text-red-600">Home</a> / Comparisons</div>
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Graph database <span class="gradient-text">comparisons</span></h1>
@@ -105,7 +113,26 @@
         </div>
     </main>
 
-    <footer class="py-12 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="grid md:grid-cols-4 gap-8 text-sm"><div><div class="font-bold text-lg mb-2">LadybugDB</div><p class="text-gray-600 dark:text-gray-400">DuckDB for graphs — the KuzuDB successor.</p></div><div><div class="font-semibold mb-2">Learn</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="/what-is-a-graph-database" class="hover:text-red-600">What is a Graph DB?</a></li><li><a href="/what-is-kuzudb" class="hover:text-red-600">What is KuzuDB?</a></li></ul></div><div><div class="font-semibold mb-2">Compare</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="/ladybugdb-vs-neo4j" class="hover:text-red-600">vs Neo4j</a></li><li><a href="/ladybugdb-vs-falkordb" class="hover:text-red-600">vs FalkorDB</a></li><li><a href="/ladybugdb-vs-arcadedb" class="hover:text-red-600">vs ArcadeDB</a></li><li><a href="/ladybugdb-vs-helixdb" class="hover:text-red-600">vs HelixDB</a></li></ul></div><div><div class="font-semibold mb-2">Resources</div><ul class="space-y-1 text-gray-600 dark:text-gray-400"><li><a href="https://docs.ladybugdb.com" class="hover:text-red-600">Docs</a></li><li><a href="https://github.com/LadybugDB/ladybug" class="hover:text-red-600">GitHub</a></li><li><a href="https://blog.ladybugdb.com" class="hover:text-red-600">Blog</a></li></ul></div></div><div class="mt-8 pt-8 border-t border-gray-300 dark:border-gray-800 text-center text-xs text-gray-500">&copy; 2026 LadybugDB. Proudly sponsored by <a href="https://ladybugmem.ai" class="text-red-600 hover:underline">Ladybug Memory</a>.</div></div></footer>
-    <script>const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;function toggleTheme(){html.classList.contains('dark')?html.classList.remove('dark'):html.classList.add('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light')}themeToggle&&themeToggle.addEventListener('click',toggleTheme);if(localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches))html.classList.add('dark');const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileMenu=document.getElementById('mobileMenu');mobileMenuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));</script>
+    <footer class="border-t border-stone-200 dark:border-stone-800">
+        <div class="max-w-6xl mx-auto px-5 py-6 flex flex-col sm:flex-row gap-2 sm:items-center justify-between mono text-[12px] text-stone-500 dark:text-stone-500">
+            <span>© 2026 LadybugDB · <a href="https://ladybugmem.ai" class="underline hover:text-red-700 dark:hover:text-red-400">ladybug memory</a></span>
+            <span>
+                <a href="https://x.com/lbugdb" class="hover:text-red-700 dark:hover:text-red-400">x</a> /
+                <a href="https://www.linkedin.com/company/ladybugdb/" class="hover:text-red-700 dark:hover:text-red-400">linkedin</a> /
+                <a href="https://github.com/LadybugDB/ladybug" class="hover:text-red-700 dark:hover:text-red-400">github</a> /
+                <a href="https://discord.gg/zz9tsw53Bd" class="hover:text-red-700 dark:hover:text-red-400">discord</a> /
+                <a href="mailto:social@ladybugdb.com" class="hover:text-red-700 dark:hover:text-red-400">contact</a>
+            </span>
+        </div>
+    </footer>
+<script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) { html.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
+            else { html.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
+        });
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) html.classList.add('dark');
+    </script>
 </body>
 </html>
