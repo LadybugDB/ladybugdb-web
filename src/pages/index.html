@@ -67,15 +67,15 @@
         body { font-family: 'Inter', -apple-system, 'BlinkMacSystemFont', sans-serif; }
         .mono { font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
         .codeblock {
-            background: #f4f2ed;
-            color: #1c1917;
-            border: 1px solid #e7e5e4;
+            background: #f3f4f6;
+            color: #111827;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
             font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
             font-size: 13px;
             line-height: 1.7;
         }
-        .dark .codeblock { background: #1c1917; border-color: #292524; color: #e7e5e4; }
+        .dark .codeblock { background: #111827; border-color: #1f2937; color: #e5e7eb; }
         .codeblock .c { color: #61636a; }
         .dark .codeblock .c { color: #aaaeb6; }
         .codeblock .k { color: #8c19b3; }
@@ -87,14 +87,14 @@
         .codeblock .l { color: #b13f00; }
         .dark .codeblock .l { color: #ffad5c; }
         .sechead { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
-        .ecorow { border-top: 1px solid #e7e5e4; }
-        .dark .ecorow { border-top-color: #292524; }
-        .ecorow:last-child { border-bottom: 1px solid #e7e5e4; }
-        .dark .ecorow:last-child { border-bottom-color: #292524; }
+        .ecorow { border-top: 1px solid #e5e7eb; }
+        .dark .ecorow { border-top-color: #1f2937; }
+        .ecorow:last-child { border-bottom: 1px solid #e5e7eb; }
+        .dark .ecorow:last-child { border-bottom-color: #1f2937; }
         .shell-stage { display: grid; }
         .shell-slide { grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
         .shell-slide.active { opacity: 1; visibility: visible; }
-        .shell-dot { color: #a8a29e; padding: 0 2px; }
+        .shell-dot { color: #9ca3af; padding: 0 2px; }
         .shell-dot.active { color: #b91c1c; font-weight: 600; }
         .dark .shell-dot.active { color: #f87171; }
         .cursor { animation: blink 0.9s step-end infinite; }
@@ -102,10 +102,10 @@
         a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
     </style>
 </head>
-<body class="bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-200 transition-colors duration-300 antialiased">
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300 antialiased">
 
     <!-- Header -->
-    <header class="border-b border-stone-200 dark:border-stone-800">
+    <header class="border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-[760px] mx-auto px-5 h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2">
                 <svg class="w-8 h-8" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,13 +118,14 @@
                     <circle cx="135" cy="110" r="12" fill="#1c1917"/>
                     <circle cx="130" cy="145" r="10" fill="#1c1917"/>
                 </svg>
-                <span class="mono font-semibold text-[15px] tracking-tight text-stone-900 dark:text-stone-200">LadybugDB</span>
-                <span class="mono text-[11px] px-1.5 py-0.5 rounded border border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400">v0.22.1</span>
+                <span class="mono font-semibold text-[15px] tracking-tight text-gray-900 dark:text-gray-200">LadybugDB</span>
+                <span class="mono text-[11px] px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400">v0.22.1</span>
             </a>
-            <nav class="flex items-center gap-1 mono text-[13px] text-stone-500 dark:text-stone-400">
+            <nav class="flex items-center gap-1 mono text-[13px] text-gray-500 dark:text-gray-400">
                 <a href="https://docs.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">docs</a><span class="select-none">/</span>
                 <a href="https://blog.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">blog</a><span class="select-none hidden sm:inline">/</span>
                 <a href="/comparisons" class="px-1.5 hover:text-red-700 dark:hover:text-red-400 hidden sm:inline">comparisons</a><span class="select-none">/</span>
+                <a href="/why" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">why</a><span class="select-none">/</span>
                 <a href="https://github.com/LadybugDB/ladybug" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">github</a>
                 <button id="themeToggle" class="ml-2 px-1.5 hover:text-red-700 dark:hover:text-red-400" aria-label="Toggle theme">◐</button>
             </nav>
@@ -135,17 +136,17 @@
 
         <!-- Intro -->
         <section class="pt-12">
-            <p class="mt-4 text-[15px] leading-relaxed text-stone-600 dark:text-stone-400">
-                LadybugDB is an <strong class="text-stone-900 dark:text-stone-100 font-semibold">embedded columnar graph database</strong>
+            <p class="mt-4 text-[15px] leading-relaxed text-gray-600 dark:text-gray-400">
+                LadybugDB is an <strong class="text-gray-900 dark:text-gray-100 font-semibold">embedded columnar graph database</strong>
                 with a Cypher query engine — DuckDB-style ergonomics for connected data.
                 Zero-config single file, vectorized execution, with Postgres interop, lakehouse interop,
                 and a surrounding ecosystem for analytics, visualization, agent filesystems, and RDF/SHACL.
             </p>
             <div class="mt-5 codeblock px-4 py-3 flex items-center justify-between gap-3">
                 <code id="installCommand" class="overflow-x-auto whitespace-nowrap">curl -fsSL https://install.ladybugdb.com | sh</code>
-                <button id="copyBtn" class="shrink-0 mono text-[11px] px-2 py-1 rounded border border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white hover:border-stone-400 transition-colors" aria-label="Copy install command">copy</button>
+                <button id="copyBtn" class="shrink-0 mono text-[11px] px-2 py-1 rounded border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-400 transition-colors" aria-label="Copy install command">copy</button>
             </div>
-            <p class="mono mt-3 text-[12px] text-stone-500 dark:text-stone-400 leading-relaxed">
+            <p class="mono mt-3 text-[12px] text-gray-500 dark:text-gray-400 leading-relaxed">
                 <button data-cmd="curl -fsSL https://install.ladybugdb.com | sh" class="alt hover:text-red-700 dark:hover:text-red-400 underline">curl</button>
                 · <button data-cmd="brew install ladybug" class="alt hover:text-red-700 dark:hover:text-red-400 underline">brew install ladybug</button>
                 · <button data-cmd="uv pip install ladybugdb" class="alt hover:text-red-700 dark:hover:text-red-400 underline">uv pip install ladybugdb</button>
@@ -201,7 +202,7 @@ Time: 1.07ms (compiling), 2.00ms (executing)</span></pre>
                     <button class="shell-dot" data-i="0">1</button><span class="c"> / </span><button class="shell-dot" data-i="1">2</button><span class="c"> / </span><button class="shell-dot" data-i="2">3</button><span id="shellState" class="ml-2"></span>
                 </div>
             </div>
-            <p class="mt-3 text-[13px] text-stone-500 dark:text-stone-400">
+            <p class="mt-3 text-[13px] text-gray-500 dark:text-gray-400">
                 <a href="https://ladybugdb.github.io/wasm-shell/" class="underline hover:text-red-700 dark:hover:text-red-400 font-medium">Try live queries in your browser →</a>
             </p>
         </section>
@@ -209,73 +210,73 @@ Time: 1.07ms (compiling), 2.00ms (executing)</span></pre>
         <!-- Ecosystem -->
         <section id="ecosystem" class="pt-12">
             <h2 class="sechead"><span class="text-red-700 dark:text-red-400">##</span> Ecosystem</h2>
-            <p class="mt-3 text-[14px] leading-relaxed text-stone-600 dark:text-stone-400">
+            <p class="mt-3 text-[14px] leading-relaxed text-gray-600 dark:text-gray-400">
                 One storage engine, several ways to reach it. Everything below reads and writes the same graph.
             </p>
 
             <div class="mt-4 text-[14px]">
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">icebug <span class="font-normal text-stone-400">— analytics</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://github.com/LadybugDB/ladybug-icebug-notebooks" class="underline hover:text-red-700 dark:hover:text-red-400">notebooks</a> · <a href="https://github.com/Ladybug-Memory/icebug" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
+                        <span class="mono font-semibold">icebug <span class="font-normal text-gray-400">— analytics</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://github.com/LadybugDB/ladybug-icebug-notebooks" class="underline hover:text-red-700 dark:hover:text-red-400">notebooks</a> · <a href="https://github.com/Ladybug-Memory/icebug" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">Columnar graph analytics that works directly on LadybugDB, Parquet, and Arrow — no export step. PageRank, components, community detection, paths.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Columnar graph analytics that works directly on LadybugDB, Parquet, and Arrow — no export step. PageRank, components, community detection, paths.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">bugscope <span class="font-normal text-stone-400">— visualizer</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://github.com/LadybugDB/bugscope" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
+                        <span class="mono font-semibold">bugscope <span class="font-normal text-gray-400">— visualizer</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://github.com/LadybugDB/bugscope" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">Lean, Rust-backed graph visualizer for exploring LadybugDB — built for large result sets, not slideware.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Lean, Rust-backed graph visualizer for exploring LadybugDB — built for large result sets, not slideware.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">extensions <span class="font-normal text-stone-400">— batteries included</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://docs.ladybugdb.com/extensions/adbc/" class="underline hover:text-red-700 dark:hover:text-red-400">docs</a> · <a href="http://extension.ladybugdb.com/" class="underline hover:text-red-700 dark:hover:text-red-400">registry</a></span>
+                        <span class="mono font-semibold">extensions <span class="font-normal text-gray-400">— batteries included</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://docs.ladybugdb.com/extensions/adbc/" class="underline hover:text-red-700 dark:hover:text-red-400">docs</a> · <a href="http://extension.ladybugdb.com/" class="underline hover:text-red-700 dark:hover:text-red-400">registry</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">Rich extension system: <span class="mono text-[12.5px]">adbc, postgres, duckdb, iceberg, delta, httpfs, json, fts, vector, algo, neo4j</span> and more. <span class="mono text-[12px]">INSTALL adbc;</span> and query.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Rich extension system: <span class="mono text-[12.5px]">adbc, postgres, duckdb, iceberg, delta, httpfs, json, fts, vector, algo, neo4j</span> and more. <span class="mono text-[12px]">INSTALL adbc;</span> and query.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">server <span class="font-normal text-stone-400">— adbc · bolt</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://github.com/LadybugDB/ladybug-adbc-rs" class="underline hover:text-red-700 dark:hover:text-red-400">adbc</a> · <a href="https://github.com/LadybugDB/bolt4rs" class="underline hover:text-red-700 dark:hover:text-red-400">bolt</a></span>
+                        <span class="mono font-semibold">server <span class="font-normal text-gray-400">— adbc · bolt</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://github.com/LadybugDB/ladybug-adbc-rs" class="underline hover:text-red-700 dark:hover:text-red-400">adbc</a> · <a href="https://github.com/LadybugDB/bolt4rs" class="underline hover:text-red-700 dark:hover:text-red-400">bolt</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">Run embedded in-process, or serve it: ADBC for Arrow-native clients and Bolt for Neo4j-compatible drivers.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Run embedded in-process, or serve it: ADBC for Arrow-native clients and Bolt for Neo4j-compatible drivers.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
                         <span class="mono font-semibold">lakehouses <span class="ml-1 text-[10px] px-1.5 py-0.5 rounded bg-red-700/10 text-red-700 dark:text-red-400 border border-red-700/20 align-middle">new in 0.22.0</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://docs.ladybugdb.com/extensions/adbc/" class="underline hover:text-red-700 dark:hover:text-red-400">adbc docs</a> · <a href="https://blog.ladybugdb.com/post/ladybug-0-22-0-release/" class="underline hover:text-red-700 dark:hover:text-red-400">release notes</a></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://docs.ladybugdb.com/extensions/adbc/" class="underline hover:text-red-700 dark:hover:text-red-400">adbc docs</a> · <a href="https://blog.ladybugdb.com/post/ladybug-0-22-0-release/" class="underline hover:text-red-700 dark:hover:text-red-400">release notes</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">Query Snowflake and Databricks lakehouses live via ADBC — attach the warehouse and join it against your local graph.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Query Snowflake and Databricks lakehouses live via ADBC — attach the warehouse and join it against your local graph.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">pg_ladybug <span class="font-normal text-stone-400">— postgres extension</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://github.com/LadybugDB/pg_ladybug" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
+                        <span class="mono font-semibold">pg_ladybug <span class="font-normal text-gray-400">— postgres extension</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://github.com/LadybugDB/pg_ladybug" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">Runs the graph engine inside PostgreSQL. Cypher over your Postgres tables, native execution under the hood.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Runs the graph engine inside PostgreSQL. Cypher over your Postgres tables, native execution under the hood.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">ladybug-fs <span class="font-normal text-stone-400">— files for agents</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://github.com/LadybugDB/ladybug-fs" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
+                        <span class="mono font-semibold">ladybug-fs <span class="font-normal text-gray-400">— files for agents</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://github.com/LadybugDB/ladybug-fs" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">A filesystem view of the graph for agents that prefer writing text files: browse with <span class="mono text-[12.5px]">ls</span>, read with <span class="mono text-[12.5px]">cat</span>, mutate by rewriting files.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">A filesystem view of the graph for agents that prefer writing text files: browse with <span class="mono text-[12.5px]">ls</span>, read with <span class="mono text-[12.5px]">cat</span>, mutate by rewriting files.</p>
                 </div>
 
                 <div class="ecorow py-3.5">
                     <div class="flex items-baseline justify-between gap-3 flex-wrap">
-                        <span class="mono font-semibold">ontobug <span class="font-normal text-stone-400">— rdf · shacl</span></span>
-                        <span class="mono text-[11px] text-stone-400"><a href="https://github.com/LadybugDB/ontobug" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
+                        <span class="mono font-semibold">ontobug <span class="font-normal text-gray-400">— rdf · shacl</span></span>
+                        <span class="mono text-[11px] text-gray-400"><a href="https://github.com/LadybugDB/ontobug" class="underline hover:text-red-700 dark:hover:text-red-400">github</a></span>
                     </div>
-                    <p class="mt-1 text-stone-600 dark:text-stone-400 text-[13.5px] leading-relaxed">OWL ontologies, SHACL shapes, and RDF data stored as a Cypher property graph — validation on load, DDL constraining later writes.</p>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">OWL ontologies, SHACL shapes, and RDF data stored as a Cypher property graph — validation on load, DDL constraining later writes.</p>
                 </div>
             </div>
         </section>
@@ -283,16 +284,18 @@ Time: 1.07ms (compiling), 2.00ms (executing)</span></pre>
         <!-- Resources -->
         <section class="pt-12">
             <h2 class="sechead"><span class="text-red-700 dark:text-red-400">##</span> Resources</h2>
-            <div class="mono mt-3 text-[13px] leading-loose text-stone-500 dark:text-stone-400">
-                <a href="https://leanpub.com/ladybugdb" class="block hover:text-red-700 dark:hover:text-red-400">LadybugDB for Edge Agent AI memory <span class="text-stone-400 dark:text-stone-600">— leanpub</span></a>
+            <div class="mono mt-3 text-[13px] leading-loose text-gray-500 dark:text-gray-400">
+                <a href="https://leanpub.com/ladybugdb" class="block hover:text-red-700 dark:hover:text-red-400">LadybugDB for Edge Agent AI memory <span class="text-gray-400 dark:text-gray-600">— leanpub</span></a>
+                <a href="https://gdotv.com/databases/ladybugdb/" class="block hover:text-red-700 dark:hover:text-red-400">LadybugDB on GDOTV database directory <span class="text-gray-400 dark:text-gray-600">— gdotv</span></a>
+                <a href="https://networkit.github.io/dev-docs/notebooks.html" class="block hover:text-red-700 dark:hover:text-red-400">icebug notebooks <span class="text-gray-400 dark:text-gray-600">— networkit · import icebug as ib, use ib instead of nk</span></a>
             </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-stone-200 dark:border-stone-800">
-        <div class="max-w-[760px] mx-auto px-5 py-6 flex flex-col sm:flex-row gap-2 sm:items-center justify-between mono text-[12px] text-stone-500 dark:text-stone-500">
+    <footer class="border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-[760px] mx-auto px-5 py-6 flex flex-col sm:flex-row gap-2 sm:items-center justify-between mono text-[12px] text-gray-500 dark:text-gray-500">
             <span>© 2026 LadybugDB · <a href="https://ladybugmem.ai" class="underline hover:text-red-700 dark:hover:text-red-400">ladybug memory</a></span>
             <span>
                 <a href="https://x.com/lbugdb" class="hover:text-red-700 dark:hover:text-red-400">x</a> /

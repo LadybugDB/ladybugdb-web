@@ -15,6 +15,7 @@
 
 ## Code
 - [LadybugDB GitHub](https://github.com/LadybugDB/ladybug): Source code repository
+- [LadybugDB Agent Skill](https://github.com/LadybugDB/ladybug-skill): Agent skill for working with LadybugDB
 
 ## Resources
 - [LadybugDB Book](https://leanpub.com/ladybugdb): Official book on Leanpub

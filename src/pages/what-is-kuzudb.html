@@ -31,7 +31,7 @@
     <style>.mono{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace}html{scroll-behavior:smooth}.gradient-text{background:linear-gradient(135deg,#dc2626 0%,#ef4444 50%,#b91c1c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}pre.cypher{background:#1f2937;color:#f3f4f6;border-radius:.75rem;padding:1rem 1.25rem;overflow-x:auto;font-size:.875rem}pre.cypher .k{color:#f87171}pre.cypher .c{color:#9ca3af}</style>
 </head>
 <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
-    <header class="border-b border-stone-200 dark:border-stone-800">
+    <header class="border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2">
                 <svg class="w-8 h-8" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,10 +44,10 @@
                     <circle cx="135" cy="110" r="12" fill="#1c1917"/>
                     <circle cx="130" cy="145" r="10" fill="#1c1917"/>
                 </svg>
-                <span class="mono font-semibold text-[15px] tracking-tight text-stone-900 dark:text-stone-200">LadybugDB</span>
-                <span class="mono text-[11px] px-1.5 py-0.5 rounded border border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400">v0.22.1</span>
+                <span class="mono font-semibold text-[15px] tracking-tight text-gray-900 dark:text-gray-200">LadybugDB</span>
+                <span class="mono text-[11px] px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400">v0.22.1</span>
             </a>
-            <nav class="flex items-center gap-1 mono text-[13px] text-stone-500 dark:text-stone-400">
+            <nav class="flex items-center gap-1 mono text-[13px] text-gray-500 dark:text-gray-400">
                 <a href="https://docs.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">docs</a><span class="select-none">/</span>
                 <a href="https://blog.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">blog</a><span class="select-none hidden sm:inline">/</span>
                 <a href="/comparisons" class="px-1.5 hover:text-red-700 dark:hover:text-red-400 hidden sm:inline">comparisons</a><span class="select-none">/</span>
@@ -117,8 +117,8 @@ conn.execute(<span class="c">"MATCH (a:Person)-[:KNOWS]->(b) RETURN a.name, b.na
         </div>
         <div class="mt-10 text-sm"><h2 class="font-bold text-lg">Keep learning</h2><div class="mt-3 grid sm:grid-cols-2 gap-3"><a href="/what-is-a-graph-database" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">What is a Graph DB? →</a><a href="/ladybugdb-vs-neo4j" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs Neo4j →</a><a href="/ladybugdb-vs-helixdb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs HelixDB →</a><a href="/ladybugdb-vs-arcadedb" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-red-500 font-medium">LadybugDB vs ArcadeDB →</a></div></div>
     </div></main>
-    <footer class="border-t border-stone-200 dark:border-stone-800">
-        <div class="max-w-6xl mx-auto px-5 py-6 flex flex-col sm:flex-row gap-2 sm:items-center justify-between mono text-[12px] text-stone-500 dark:text-stone-500">
+    <footer class="border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-5 py-6 flex flex-col sm:flex-row gap-2 sm:items-center justify-between mono text-[12px] text-gray-500 dark:text-gray-500">
             <span>© 2026 LadybugDB · <a href="https://ladybugmem.ai" class="underline hover:text-red-700 dark:hover:text-red-400">ladybug memory</a></span>
             <span>
                 <a href="https://x.com/lbugdb" class="hover:text-red-700 dark:hover:text-red-400">x</a> /
