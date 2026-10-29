@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why LadybugDB? — DuckDB for Graphs | LadybugDB</title>
+    <meta name="description" content="Why LadybugDB? Small, fast, and lucky — the embedded columnar graph database, DuckDB for graphs and the KuzuDB successor.">
+    <link rel="canonical" href="https://ladybugdb.com/why">
+    <meta property="og:title" content="Why LadybugDB?">
+    <meta property="og:description" content="Small, fast, and lucky — DuckDB for graphs. The embedded columnar graph database.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ladybugdb.com/why">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="llms" href="/llms.txt" type="text/plain">
+    <link rel="llms-full" href="/llms-full.txt" type="text/plain">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/tailwind-config.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, 'BlinkMacSystemFont', sans-serif; }
+        .mono { font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+        .hero-glow {
+            box-shadow: 0 0 60px rgba(220, 38, 38, 0.3);
+        }
+        .dark .hero-glow {
+            box-shadow: 0 0 80px rgba(220, 38, 38, 0.4);
+        }
+        .float-slow { animation: floaty 7s ease-in-out infinite; }
+        .float-slower { animation: floaty 9s ease-in-out infinite reverse; }
+        @keyframes floaty {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .float-slow, .float-slower { animation: none; }
+        }
+        .sechead { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+        .ecorow { border-top: 1px solid #e5e7eb; }
+        .dark .ecorow { border-top-color: #1f2937; }
+        .ecorow:last-child { border-bottom: 1px solid #e5e7eb; }
+        .dark .ecorow:last-child { border-bottom-color: #1f2937; }
+        a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300 antialiased">
+
+    <!-- Header -->
+    <header class="border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-[760px] mx-auto px-5 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+                <svg class="w-8 h-8" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="100" cy="110" rx="60" ry="70" fill="#b91c1c"/>
+                    <circle cx="100" cy="50" r="25" fill="#1c1917"/>
+                    <circle cx="70" cy="80" r="10" fill="#1c1917"/>
+                    <circle cx="65" cy="110" r="12" fill="#1c1917"/>
+                    <circle cx="70" cy="145" r="10" fill="#1c1917"/>
+                    <circle cx="130" cy="80" r="10" fill="#1c1917"/>
+                    <circle cx="135" cy="110" r="12" fill="#1c1917"/>
+                    <circle cx="130" cy="145" r="10" fill="#1c1917"/>
+                </svg>
+                <span class="mono font-semibold text-[15px] tracking-tight text-gray-900 dark:text-gray-200">LadybugDB</span>
+                <span class="mono text-[11px] px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400">v0.22.1</span>
+            </a>
+            <nav class="flex items-center gap-1 mono text-[13px] text-gray-500 dark:text-gray-400">
+                <a href="https://docs.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">docs</a><span class="select-none">/</span>
+                <a href="https://blog.ladybugdb.com" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">blog</a><span class="select-none hidden sm:inline">/</span>
+                <a href="/comparisons" class="px-1.5 hover:text-red-700 dark:hover:text-red-400 hidden sm:inline">comparisons</a><span class="select-none">/</span>
+                <a href="/why" class="px-1.5 text-red-700 dark:text-red-400">why</a><span class="select-none">/</span>
+                <a href="https://github.com/LadybugDB/ladybug" class="px-1.5 hover:text-red-700 dark:hover:text-red-400">github</a>
+                <button id="themeToggle" class="ml-2 px-1.5 hover:text-red-700 dark:hover:text-red-400" aria-label="Toggle theme">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-[760px] mx-auto px-5 pb-24">
+
+        <!-- Hero: the ladybug -->
+        <section class="pt-14 text-center">
+            <div class="relative flex justify-center">
+                <div class="absolute -top-2 mono text-[11px] px-2.5 py-1 rounded-full bg-red-700/10 text-red-700 dark:text-red-400 border border-red-700/20">why ladybug?</div>
+                <div class="relative hero-glow rounded-full p-10 md:p-14 bg-white dark:bg-gray-900 mt-6 float-slow">
+                    <svg class="w-56 h-56 md:w-80 md:h-80" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Large red ladybug">
+                        <ellipse cx="100" cy="110" rx="60" ry="70" fill="#dc2626"/>
+                        <circle cx="100" cy="50" r="25" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <line x1="100" y1="50" x2="100" y2="180" stroke="#1f2937" stroke-width="3" class="dark:stroke-gray-800"/>
+                        <circle cx="70" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <circle cx="65" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <circle cx="70" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <circle cx="130" cy="80" r="10" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <circle cx="135" cy="110" r="12" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <circle cx="130" cy="145" r="10" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <line x1="90" y1="35" x2="80" y2="20" stroke="#1f2937" stroke-width="2" stroke-linecap="round" class="dark:stroke-gray-800"/>
+                        <line x1="110" y1="35" x2="120" y2="20" stroke="#1f2937" stroke-width="2" stroke-linecap="round" class="dark:stroke-gray-800"/>
+                        <circle cx="80" cy="20" r="3" fill="#1f2937" class="dark:fill-gray-800"/>
+                        <circle cx="120" cy="20" r="3" fill="#1f2937" class="dark:fill-gray-800"/>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="mt-10 text-4xl md:text-5xl font-bold tracking-tight">Small. Fast.<br><span class="text-red-700 dark:text-red-400">Lucky.</span></h1>
+            <p class="mt-4 text-[15px] leading-relaxed text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                Ladybugs eat the pests and leave the garden alone.
+                They also have excellent scent-based memory that lets them remember
+                migration paths and trails left by their ancestors.
+                LadybugDB does the same to your stack: one small embedded
+                graph engine that removes servers, sidecars, and ops — and leaves the data.
+            </p>
+        </section>
+
+        <!-- Three spots -->
+        <section class="pt-14">
+            <div class="grid grid-cols-3 gap-3 md:gap-4 text-center">
+                <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-2 py-6 float-slower">
+                    <div class="mono text-3xl md:text-4xl font-semibold text-red-700 dark:text-red-400">1</div>
+                    <div class="mono mt-1 text-[11px] md:text-xs text-gray-500 dark:text-gray-400">file<br>zero-ops</div>
+                </div>
+                <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-2 py-6">
+                    <div class="mono text-3xl md:text-4xl font-semibold text-red-700 dark:text-red-400">ms</div>
+                    <div class="mono mt-1 text-[11px] md:text-xs text-gray-500 dark:text-gray-400">columnar<br>vectorized</div>
+                </div>
+                <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-2 py-6 float-slow">
+                    <div class="mono text-3xl md:text-4xl font-semibold text-red-700 dark:text-red-400">∞</div>
+                    <div class="mono mt-1 text-[11px] md:text-xs text-gray-500 dark:text-gray-400">runs<br>anywhere</div>
+                </div>
+            </div>
+            <p class="mono mt-4 text-center text-[12px] text-gray-500 dark:text-gray-400">embedded · cypher · MIT-licensed — <a href="/comparisons" class="underline hover:text-red-700 dark:hover:text-red-400">see the comparisons</a></p>
+        </section>
+
+        <!-- By the numbers -->
+        <section class="pt-14">
+            <h2 class="sechead"><span class="text-red-700 dark:text-red-400">##</span> By The Numbers</h2>
+            <div class="mt-4 text-[14px]">
+                <div class="ecorow py-3.5">
+                    <span class="mono font-semibold">Context Graph <span class="font-normal text-gray-400">— Memory For Agents</span></span>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Knowledge-graph and context-graph storage for your agents — the scent trails your stack remembers.</p>
+                </div>
+                <div class="ecorow py-3.5">
+                    <span class="mono font-semibold">20MB <span class="font-normal text-gray-400">— Stays Small</span></span>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">Single-file embedded footprint: sqlite (&lt; 1MB), DuckDB (~60MB), LadybugDB (~20MB).</p>
+                </div>
+                <div class="ecorow py-3.5">
+                    <span class="mono font-semibold">220+ <span class="font-normal text-gray-400">— Graph Algorithms</span></span>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">220+ graph algorithms from <a href="https://github.com/Ladybug-Memory/icebug" class="underline hover:text-red-700 dark:hover:text-red-400">icebug</a> — PageRank, components, community detection, paths.</p>
+                </div>
+                <div class="ecorow py-3.5">
+                    <span class="mono font-semibold">800k <span class="font-normal text-gray-400">— Downloads / Month</span></span>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">800k downloads a month across SDKs and extensions.</p>
+                </div>
+                <div class="ecorow py-3.5">
+                    <span class="mono font-semibold">190 <span class="font-normal text-gray-400">— Projects Using It</span></span>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">190 projects building on LadybugDB.</p>
+                </div>
+                <div class="ecorow py-3.5">
+                    <span class="mono font-semibold">Arrow <span class="font-normal text-gray-400">— Efficient Over The Wire</span></span>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400 text-[13.5px] leading-relaxed">ADBC and Arrow Flight are significantly more efficient over the wire when run as a server.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="pt-14 text-center">
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="https://docs.ladybugdb.com" class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20">Get Started →</a>
+                <a href="/" class="inline-flex items-center justify-center px-6 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 font-semibold hover:border-red-600 dark:hover:border-red-400 hover:text-red-600 dark:hover:text-red-400 transition-colors">← back home</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-[760px] mx-auto px-5 py-6 flex flex-col sm:flex-row gap-2 sm:items-center justify-between mono text-[12px] text-gray-500 dark:text-gray-500">
+            <span>© 2026 LadybugDB · <a href="https://ladybugmem.ai" class="underline hover:text-red-700 dark:hover:text-red-400">ladybug memory</a></span>
+            <span>
+                <a href="https://x.com/lbugdb" class="hover:text-red-700 dark:hover:text-red-400">x</a> /
+                <a href="https://www.linkedin.com/company/ladybugdb/" class="hover:text-red-700 dark:hover:text-red-400">linkedin</a> /
+                <a href="https://github.com/LadybugDB/ladybug" class="hover:text-red-700 dark:hover:text-red-400">github</a> /
+                <a href="https://discord.gg/zz9tsw53Bd" class="hover:text-red-700 dark:hover:text-red-400">discord</a> /
+                <a href="mailto:social@ladybugdb.com" class="hover:text-red-700 dark:hover:text-red-400">contact</a>
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) { html.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
+            else { html.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
+        });
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+    </script>
+</body>
+</html>
