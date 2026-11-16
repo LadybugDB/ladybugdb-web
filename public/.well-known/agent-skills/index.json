@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "ladybug-skill",
+      "description": "Use this skill when writing code to talk to LadybugDB, or to Kùzu/KuzuDB (`kuzu` package, `import kuzu`, `.kuzu` files). Kùzu is archived and LadybugDB is its continuation, so this also covers migrating from Kùzu.",
+      "type": "archive",
+      "url": "https://github.com/LadybugDB/ladybug-skill/releases/download/v1.1.0/ladybug-skill.zip",
+      "digest": "sha256:999e044fdf0c5121e40b272bf8afb4c585a2fc091102ef913563dd354f3e2730"
+    }
+  ]
+}
